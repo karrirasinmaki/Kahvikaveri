@@ -1,0 +1,124 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (javaClasses.cpp:136), pid=2872, tid=5236
+#  fatal error: Invalid layout of preloaded class
+#
+# JRE version:  (7.0_45-b18) (build )
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (24.45-b08 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000000002590800):  JavaThread "Unknown thread" [_thread_in_vm, id=5236, stack(0x00000000023b0000,0x00000000024b0000)]
+
+Stack: [0x00000000023b0000,0x00000000024b0000]
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x0000000002590800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=5236, stack(0x00000000023b0000,0x00000000024b0000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (10 events):
+Event: 0.013 loading class 0x00000000025d4940 done
+Event: 0.013 loading class 0x00000000025d4360 done
+Event: 0.013 loading class 0x00000000025d4340
+Event: 0.013 loading class 0x00000000025dc440
+Event: 0.013 loading class 0x00000000025dc440 done
+Event: 0.013 loading class 0x00000000025dc470
+Event: 0.013 loading class 0x00000000025dc470 done
+Event: 0.013 loading class 0x00000000025dc4a0
+Event: 0.013 loading class 0x00000000025dc4a0 done
+Event: 0.014 loading class 0x00000000025d4340 done
+
+
+Dynamic libraries:
+0x00007ff640e50000 - 0x00007ff640e83000 	C:\Program Files\Java\jdk1.7.0_45\bin\javaw.exe
+0x00007fffc2410000 - 0x00007fffc25b9000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007fffc0250000 - 0x00007fffc0389000 	C:\WINDOWS\system32\KERNEL32.DLL
+0x00007fffbf860000 - 0x00007fffbf96e000 	C:\WINDOWS\system32\KERNELBASE.dll
+0x00007fffbe340000 - 0x00007fffbe3cb000 	C:\WINDOWS\system32\apphelp.dll
+0x00007fffbd7c0000 - 0x00007fffbd80f000 	C:\WINDOWS\AppPatch\AppPatch64\AcGenral.DLL
+0x00007fffc05f0000 - 0x00007fffc0697000 	C:\WINDOWS\system32\msvcrt.dll
+0x00007fffbf5a0000 - 0x00007fffbf5cb000 	C:\WINDOWS\SYSTEM32\SspiCli.dll
+0x00007fffc0c20000 - 0x00007fffc0c71000 	C:\WINDOWS\system32\SHLWAPI.dll
+0x00007fffbfca0000 - 0x00007fffbfe11000 	C:\WINDOWS\system32\USER32.dll
+0x00007fffc0c80000 - 0x00007fffc0df6000 	C:\WINDOWS\system32\ole32.dll
+0x00007fffc0eb0000 - 0x00007fffc22bf000 	C:\WINDOWS\system32\SHELL32.dll
+0x00007fffbed70000 - 0x00007fffbed8f000 	C:\WINDOWS\SYSTEM32\USERENV.dll
+0x00007fffc0060000 - 0x00007fffc0105000 	C:\WINDOWS\system32\ADVAPI32.dll
+0x00007fffb68f0000 - 0x00007fffb690b000 	C:\WINDOWS\SYSTEM32\MPR.dll
+0x00007fffc0110000 - 0x00007fffc0246000 	C:\WINDOWS\system32\RPCRT4.dll
+0x00007fffc0000000 - 0x00007fffc0057000 	C:\WINDOWS\SYSTEM32\sechost.dll
+0x00007fffc0a40000 - 0x00007fffc0c17000 	C:\WINDOWS\SYSTEM32\combase.dll
+0x00007fffc04a0000 - 0x00007fffc05e5000 	C:\WINDOWS\system32\GDI32.dll
+0x00007fffbf790000 - 0x00007fffbf7a4000 	C:\WINDOWS\SYSTEM32\profapi.dll
+0x00007fffbe290000 - 0x00007fffbe331000 	C:\WINDOWS\SYSTEM32\SHCORE.dll
+0x00007fffc0e00000 - 0x00007fffc0e34000 	C:\WINDOWS\system32\IMM32.DLL
+0x00007fffc22c0000 - 0x00007fffc23f8000 	C:\WINDOWS\system32\MSCTF.dll
+0x00007fffbf750000 - 0x00007fffbf77f000 	C:\WINDOWS\system32\nvinitx.dll
+0x000000000f000000 - 0x000000000f006000 	C:\Program Files\NVIDIA Corporation\CoProcManager\detoured.dll
+0x00007fffbd760000 - 0x00007fffbd7bf000 	C:\Program Files\NVIDIA Corporation\CoProcManager\nvd3d9wrapx.dll
+0x00007fffbfe20000 - 0x00007fffbfff6000 	C:\WINDOWS\system32\SETUPAPI.dll
+0x00007fffbf970000 - 0x00007fffbf9ba000 	C:\WINDOWS\system32\CFGMGR32.dll
+0x00007fffbd6e0000 - 0x00007fffbd726000 	C:\Program Files\NVIDIA Corporation\CoProcManager\nvdxgiwrapx.dll
+0x00007fffbd920000 - 0x00007fffbdb7a000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.9600.16384_none_62475f7becb72503\COMCTL32.dll
+0x000000005e760000 - 0x000000005e832000 	C:\Program Files\Java\jdk1.7.0_45\jre\bin\msvcr100.dll
+0x000000005df90000 - 0x000000005e759000 	C:\Program Files\Java\jdk1.7.0_45\jre\bin\server\jvm.dll
+0x00007fffbd650000 - 0x00007fffbd659000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007fffbd3f0000 - 0x00007fffbd40f000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007fffc0390000 - 0x00007fffc0397000 	C:\WINDOWS\system32\PSAPI.DLL
+0x00007fffc06a0000 - 0x00007fffc06f8000 	C:\WINDOWS\system32\WS2_32.dll
+0x00007fffbd320000 - 0x00007fffbd34a000 	C:\WINDOWS\SYSTEM32\WINMMBASE.dll
+0x00007fffc0e40000 - 0x00007fffc0e49000 	C:\WINDOWS\system32\NSI.dll
+0x00007fffbe5c0000 - 0x00007fffbe5e6000 	C:\WINDOWS\SYSTEM32\DEVOBJ.dll
+0x000000005df80000 - 0x000000005df8f000 	C:\Program Files\Java\jdk1.7.0_45\jre\bin\verify.dll
+0x000000005df50000 - 0x000000005df78000 	C:\Program Files\Java\jdk1.7.0_45\jre\bin\java.dll
+0x000000005df30000 - 0x000000005df45000 	C:\Program Files\Java\jdk1.7.0_45\jre\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=Cp1252 -Xbootclasspath:C:\Users\asus\dev\tools\adt-bundle-windows-x86_64-20130522\sdk\platforms\android-18\android.jar 
+java_command: fi.raka.kahvikaveri.logic.App
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;;C:\Users\asus\dev\tools\HaxeToolkit\haxe\;C:\Users\asus\dev\tools\HaxeToolkit\neko
+USERNAME=asus
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 42 Stepping 7, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 8 , 64 bit Build 9200 
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 42 stepping 7, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, aes, ht, tsc, tscinvbit
+
+Memory: 4k page, physical 4097096k(1228360k free), swap 7121704k(3002628k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (24.45-b08) for windows-amd64 JRE (1.7.0_45-b18), built on Oct  8 2013 05:47:22 by "java_re" with unknown MS VC++:1600
+
+time: Mon Jan 20 20:58:49 2014
+elapsed time: 0 seconds
+
