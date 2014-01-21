@@ -21,9 +21,7 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        listItems = new ArrayList<CListItem>();
-        listItems.add( new CoffeeReceipt("Paulig") );
-        listItems.add( new CoffeeReceipt("Mokka") );
+        listItems = CoffeeReceipt.loadAll(getApplicationContext() );
         createList();
         
         // On click new receipt
