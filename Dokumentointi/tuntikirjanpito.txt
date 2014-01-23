@@ -1,4 +1,14 @@
 Tuntikirjanpito:
 
+Viikko 1
+========
 16.1.2014 - 1h
-Projektin luonti ja aiheen m狎rittely.
+Projektin luonti ja aiheen m채채rittely.
+
+Viikko 2
+========
+20.-21.1.2014 - 5h
+Projektin k채채nt철 Androidille. Reseptien listaus, luonti ja tallennus. Tallennuksess채 k채ytet채채n Androidin sis채ist채 SQLite tietokantaa.
+
+23.1.2014 - 2h
+Maven, PIT ja Cobertura konfiguraatio Androidille heikoin tuloksin. Projekti ei suostunut k채채ntym채채n Mavenin linkityksen j채lkeen.
