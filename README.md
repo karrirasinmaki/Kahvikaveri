@@ -9,3 +9,5 @@ Käytössä olevat kirjastot ja pluginit:
 - android m2e (Maven integraatio Eclipselle)
   - http://rgladwell.github.io/m2e-android/
 
+Luokkakaavio:
+http://yuml.me/26ffd73e
