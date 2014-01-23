@@ -3,6 +3,8 @@ Kahvikaveri
 
 Ohjelmoinnin harjoitustyö 2014 (aka. Javalabra). Kahvireseptivihko ja työkalu hyvän kahvin valmistukseen.
 
+Ajettava android applikaatio löytyy juuresta "Android.apk".
+
 Käytössä olevat kirjastot ja pluginit:
 - EclEmma
   - http://www.eclemma.org/
