@@ -8,14 +8,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import fi.raka.kahvikaveri.ReceiptWizard;
 import fi.raka.kahvikaveri.storage.ReceiptContract.ReceiptEntry;
 import fi.raka.kahvikaveri.storage.ReceiptDatabaseHelper;
 import fi.raka.kahvikaveri.storage.Saveable;
 
 public class CoffeeReceipt implements CListItem, Saveable {
     
-	public String id;
+	private String id;
     private String title;
     private double waterAmount, 
                 waterTemperature, 
@@ -28,6 +27,12 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	this.id = id;
     }
     
+    /**
+     * 
+     * @param id of the CoffeeReceipt
+     * @param context
+     * @return new CoffeeReceipt with loaded data or just with given id if data not found
+     */
     public static CoffeeReceipt load(String id, Context context) {
     	CoffeeReceipt newCoffeeReceipt =  new CoffeeReceipt(id);
     	newCoffeeReceipt.load(context);
@@ -79,6 +84,9 @@ public class CoffeeReceipt implements CListItem, Saveable {
     }
 
     /* Getters */
+    public String getId() {
+    	return id;
+    }
     @Override
     public String getTitle() {
         return title;

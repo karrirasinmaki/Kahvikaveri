@@ -27,7 +27,10 @@ public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 	private static final String SQL_DELETE_ENTRIES =
 	    "DROP TABLE IF EXISTS " + ReceiptEntry.TABLE_NAME;
 	
-
+	public ReceiptDatabaseHelper() {
+		super(null, DATABASE_NAME, null, DATABASE_VERSION);
+	}
+	
 	public ReceiptDatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -45,10 +48,5 @@ public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
         Log.d("DATABASE_UPGRADE", "DONE");
 	}
-	
-	@Override
-	public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onUpgrade(db, oldVersion, newVersion);
-    }
 
 }

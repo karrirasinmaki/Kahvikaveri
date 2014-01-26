@@ -15,5 +15,8 @@
         </activity>
         <activity android:name="ReceiptWizard"></activity>
     	<uses-library android:name="android.test.runner" />
+    	<activity android:name="ListActivity"></activity>
+    	<activity android:name="MyActivity"></activity>
+    	<activity android:name="CoffeeReceiptActivity"></activity>
     </application>
 </manifest>

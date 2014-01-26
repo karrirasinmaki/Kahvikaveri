@@ -28,8 +28,8 @@ public class ReceiptArrayAdapter extends ArrayAdapter<CListItem> {
         LayoutInflater inflater = (LayoutInflater) 
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(LAYOUT_ID, parent, false);
-        TextView titleView = (TextView) rowView.findViewById( R.id.title );
         
+        TextView titleView = (TextView) rowView.findViewById( R.id.title );
         titleView.setText( values.get(position).getTitle() );
         
         return rowView;
