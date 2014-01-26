@@ -12,3 +12,8 @@ Projektin kääntö Androidille. Reseptien listaus, luonti ja tallennus. Tallenn
 
 23.1.2014 - 2h
 Maven, PIT ja Cobertura konfiguraatio Androidille heikoin tuloksin. Projekti ei suostunut kääntymään Mavenin linkityksen jälkeen.
+
+Viikko 3
+========
+27.1.2014 - 3h
+Pientä etenemistä. Resptien avaus listanäkymästä + pientä refaktorointia.
