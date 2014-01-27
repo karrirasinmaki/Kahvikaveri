@@ -15,16 +15,17 @@ import fi.raka.kahvikaveri.storage.Saveable;
 public class CoffeeReceipt implements CListItem, Saveable {
     
 	private String id;
+	private int _id; // Database id
     private String title;
     private double waterAmount, 
                 waterTemperature, 
                 coffeeAmount;
     
     public CoffeeReceipt() {
-    	id = "" + new Date().getTime();
+    	setId("" + new Date().getTime());
     }
     public CoffeeReceipt(String id) {
-    	this.id = id;
+    	setId(id);
     }
     
     /**
@@ -39,11 +40,16 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	return newCoffeeReceipt;
     }
     
+    /**
+     * 
+     * @param context
+     * @return ArrayList<CListItem> filled with CoffeeReceipts
+     */
     public static ArrayList<CListItem> loadAll(Context context) {
     	ArrayList<CListItem> list = new ArrayList<CListItem>();
 
-    	SQLiteDatabase db = getDbHelper(context).getWritableDatabase();
-		Cursor c = loadCursorData(context, db, null);
+    	SQLiteDatabase db = getDbHelper(context).getReadableDatabase();
+		Cursor c = loadCursorData(db, null);
 		c.moveToFirst();
 		while(c.moveToNext() ) {
 			CoffeeReceipt coffeeReceipt = new CoffeeReceipt();
@@ -56,7 +62,8 @@ public class CoffeeReceipt implements CListItem, Saveable {
     }
     
     private void initWithCursorData(Cursor c) {
-    	id = getStringColumn(ReceiptEntry.COLUMN_NAME_ID, c);
+    	_id = getIntColumn(ReceiptEntry._ID, c);
+    	setId( getStringColumn(ReceiptEntry.COLUMN_NAME_ID, c) );
     	setTitle( getStringColumn(ReceiptEntry.COLUMN_NAME_TITLE, c) );
     	setWaterAmount( getDoubleColumn(ReceiptEntry.COLUMN_NAME_WATER_AMOUNT, c) );
     	setWaterTemperature( getDoubleColumn(ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE, c) );
@@ -70,6 +77,9 @@ public class CoffeeReceipt implements CListItem, Saveable {
     }
     
     /* Setters */
+    public void setId(String id) {
+    	this.id = id;
+    }
     public void setTitle(String title) {
         this.title = title;
     }
@@ -110,7 +120,8 @@ public class CoffeeReceipt implements CListItem, Saveable {
     private ContentValues getValues() {
     	// Create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
-		values.put(ReceiptEntry.COLUMN_NAME_ID, id);
+		values.put(ReceiptEntry._ID, _id);
+		values.put(ReceiptEntry.COLUMN_NAME_ID, getId() );
 		values.put(ReceiptEntry.COLUMN_NAME_TITLE, getTitle() );
 		values.put(ReceiptEntry.COLUMN_NAME_WATER_AMOUNT, getWaterAmount() );
 		values.put(ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE, getWaterTemperature() );
@@ -119,10 +130,11 @@ public class CoffeeReceipt implements CListItem, Saveable {
 		return values;
     }
     
-    private static Cursor loadCursorData(Context context, SQLiteDatabase db, String id) {		
+    private static Cursor loadCursorData(SQLiteDatabase db, String id) {		
 		// Define a projection that specifies which columns from the database
 		// you will actually use after this query.
 		String[] projection = {
+			ReceiptEntry._ID,
 			ReceiptEntry.COLUMN_NAME_ID,
 			ReceiptEntry.COLUMN_NAME_TITLE,
 			ReceiptEntry.COLUMN_NAME_WATER_AMOUNT,
@@ -131,7 +143,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
 		};
 		
 		// How you want the results sorted in the resulting Cursor
-		String sortOrder = ReceiptEntry.COLUMN_NAME_TITLE + " DESC";
+		String sortOrder = ReceiptEntry.COLUMN_NAME_TITLE + " ASC";
 		
 		String selection;
 		String[] selectionArgs;
@@ -165,21 +177,25 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	return c.getDouble( c.getColumnIndexOrThrow(columnName) );
     }
     
+    private int getIntColumn(String columnName, Cursor c) {
+    	return c.getInt( c.getColumnIndexOrThrow(columnName) );
+    }
+    
 	@Override
 	public String save(Context context) {
 		SQLiteDatabase db = getDbHelper(context).getWritableDatabase();
-		
+
 		db.replace(ReceiptEntry.TABLE_NAME, null, getValues());
 		db.close();
-		return id;
+		return getId();
 	}
 	
 	@Override
 	public void load(Context context) {
-		if(id == null) throw new IllegalStateException("Entry not found.");
+		if(getId() == null) throw new IllegalStateException("Entry not found.");
 
-    	SQLiteDatabase db = getDbHelper(context).getWritableDatabase();
-		Cursor c = loadCursorData(context, db, id);
+    	SQLiteDatabase db = getDbHelper(context).getReadableDatabase();
+		Cursor c = loadCursorData(db, getId());
 		c.moveToFirst();
 		initWithCursorData(c);
 		db.close();
