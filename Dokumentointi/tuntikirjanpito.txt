@@ -16,4 +16,7 @@ Maven, PIT ja Cobertura konfiguraatio Androidille heikoin tuloksin. Projekti ei 
 Viikko 3
 ========
 27.1.2014 - 3h
-Pientä etenemistä. Resptien avaus listanäkymästä + pientä refaktorointia.
+Maven linkitetty onnistuneesti Android projektiin. Resptien avaus listanäkymästä + pientä refaktorointia.
+
+28.1.2014 - 3h
+Testiluokat siiretty erilliseen projektiin. Testiprojekti ei käytä Mavenia, Maven ei ollut yhteistyöhaluinen. SQLite databasen kanssa kamppailua (reseptien talletus).
