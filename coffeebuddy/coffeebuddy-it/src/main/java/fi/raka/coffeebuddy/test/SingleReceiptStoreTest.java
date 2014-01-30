@@ -66,11 +66,11 @@ public class SingleReceiptStoreTest extends android.test.AndroidTestCase {
 	}
 	
 	public void testModifyAndLoadReceipt() {
-		cr.setWaterAmount(1337);
-		String id = cr.save(getContext());
+		cr2.setWaterAmount(1337);
+		String id = cr2.save(getContext());
 		CoffeeReceipt newCr = CoffeeReceipt.load(id, getContext());
 		
-		assertEquals(cr.toString(), newCr.toString());
+		assertEquals(cr2.toString(), newCr.toString());
 	}
 
 }

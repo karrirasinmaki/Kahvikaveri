@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 	
-	public static final int DATABASE_VERSION = 5;
+	public static final int DATABASE_VERSION = 6;
     public static final String DATABASE_NAME = "CoffeeBuddy.db";
     
 	private static final String TYPE_TEXT = " TEXT";

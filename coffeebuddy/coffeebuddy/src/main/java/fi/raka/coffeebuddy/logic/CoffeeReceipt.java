@@ -15,7 +15,7 @@ import fi.raka.coffeebuddy.storage.ReceiptContract.ReceiptEntry;
 public class CoffeeReceipt implements CListItem, Saveable {
     
 	private String id;
-	private int _id; // Database id
+	private Integer _id = null; // Database id
     private String title;
     private double waterAmount, 
                 waterTemperature, 
@@ -119,7 +119,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
     private ContentValues getValues() {
     	// Create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
-		values.put(ReceiptEntry._ID, _id);
+		// if(_id != null) values.put(ReceiptEntry._ID, _id);
 		values.put(ReceiptEntry.COLUMN_NAME_ID, getId() );
 		values.put(ReceiptEntry.COLUMN_NAME_TITLE, getTitle() );
 		values.put(ReceiptEntry.COLUMN_NAME_WATER_AMOUNT, getWaterAmount() );
@@ -183,7 +183,8 @@ public class CoffeeReceipt implements CListItem, Saveable {
 	public String save(Context context) {
 		SQLiteDatabase db = getDbHelper(context).getWritableDatabase();
 
-		db.replace(ReceiptEntry.TABLE_NAME, null, getValues());
+		// db.delete(ReceiptEntry.TABLE_NAME, ReceiptEntry.COLUMN_NAME_ID + "=?", new String[] {getId()});
+		db.insert(ReceiptEntry.TABLE_NAME, null, getValues());
 		db.close();
 		return getId();
 	}
