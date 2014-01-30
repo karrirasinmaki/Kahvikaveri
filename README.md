@@ -5,6 +5,9 @@ Ohjelmoinnin harjoitustyö 2014 (aka. Javalabra). Kahvireseptivihko ja työkalu 
 
 Ajettava android applikaatio löytyy juuresta "Android.apk".
 
+Maven-eclipse-android konffausohjeet:
+https://code.google.com/p/maven-android-plugin/
+
 Käytössä olevat kirjastot ja pluginit:
 - EclEmma
   - http://www.eclemma.org/
