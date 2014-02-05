@@ -7,6 +7,13 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>coffeebuddy - Parent</name>
+	
+	<repositories>
+	    <repository>
+	      <id>LocalhostRepo</id>
+	      <url>file://C:/Users/asus/.m2/repository</url>
+	    </repository>
+	  </repositories>
 
 	<modules>
 		<module>coffeebuddy</module>
@@ -14,9 +21,13 @@
 	</modules>
 
 	<properties>
-		<platform.version> 4.1.1.4
-					</platform.version>
+		<platform.version> 4.1.1.4</platform.version>
 		<android.plugin.version>3.6.0</android.plugin.version>
+	
+	    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+	    <sonar.emma.reportPath>/emma/</sonar.emma.reportPath>
+	    <sonar.surefire.reportsPath >/coffeebuddy/target/surefire-reports</sonar.surefire.reportsPath>
+	    <sonar.core.codeCoveragePlugin>emma</sonar.core.codeCoveragePlugin>
 	</properties>
 
 	<dependencyManagement>
@@ -33,12 +44,6 @@
 				<version>${platform.version}</version>
 				<scope>provided</scope>
 			</dependency>
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.11</version>
-				<scope>provided</scope>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -53,8 +58,10 @@
 						<sdk>
 							<platform>18</platform>
 							<path>C:\Users\asus\dev\tools\adt-bundle-windows-x86_64-20130522\sdk</path>
-						</sdk> 
-											</configuration>
+						</sdk>
+						<undeployBeforeDeploy>true</undeployBeforeDeploy>
+					</configuration>
+					<extensions>true</extensions>
 				</plugin>
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>

@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
 import fi.raka.coffeebuddy.storage.ReceiptDatabaseHelper;
 import fi.raka.coffeebuddy.storage.Saveable;
 import fi.raka.coffeebuddy.storage.ReceiptContract.ReceiptEntry;
@@ -17,9 +18,9 @@ public class CoffeeReceipt implements CListItem, Saveable {
 	private String id;
 	private Integer _id = null; // Database id
     private String title;
-    private double waterAmount, 
-                waterTemperature, 
-                coffeeAmount;
+    private double waterAmount = 0.0;
+    private double waterTemperature = 0.0;
+    private double coffeeAmount = 0.0;
     
     public CoffeeReceipt() {
     	setId("" + new Date().getTime());
@@ -62,7 +63,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
     }
     
     private void initWithCursorData(Cursor c) {
-    	_id = getIntColumn(ReceiptEntry._ID, c);
+    	_id = getIntColumn(BaseColumns._ID, c);
     	setId( getStringColumn(ReceiptEntry.COLUMN_NAME_ID, c) );
     	setTitle( getStringColumn(ReceiptEntry.COLUMN_NAME_TITLE, c) );
     	setWaterAmount( getDoubleColumn(ReceiptEntry.COLUMN_NAME_WATER_AMOUNT, c) );
@@ -77,20 +78,25 @@ public class CoffeeReceipt implements CListItem, Saveable {
     }
     
     /* Setters */
-    public void setId(String id) {
+    public CoffeeReceipt setId(String id) {
     	this.id = id;
+    	return this;
     }
-    public void setTitle(String title) {
+    public CoffeeReceipt setTitle(String title) {
         this.title = title;
+    	return this;
     }
-    public void setWaterAmount(double amount) {
+    public CoffeeReceipt setWaterAmount(double amount) {
         this.waterAmount = amount;
+    	return this;
     }
-    public void setWaterTemperature(double temperature) {
+    public CoffeeReceipt setWaterTemperature(double temperature) {
         this.waterTemperature = temperature;
+    	return this;
     }
-    public void setCoffeeAmount(double amount) {
+    public CoffeeReceipt setCoffeeAmount(double amount) {
         this.coffeeAmount = amount;
+    	return this;
     }
 
     /* Getters */
@@ -133,7 +139,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
 		// Define a projection that specifies which columns from the database
 		// you will actually use after this query.
 		String[] projection = {
-			ReceiptEntry._ID,
+			BaseColumns._ID,
 			ReceiptEntry.COLUMN_NAME_ID,
 			ReceiptEntry.COLUMN_NAME_TITLE,
 			ReceiptEntry.COLUMN_NAME_WATER_AMOUNT,
@@ -180,11 +186,25 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	return c.getInt( c.getColumnIndexOrThrow(columnName) );
     }
     
+    private boolean existsInDatabase(SQLiteDatabase db) {
+    	Cursor c = loadCursorData(db, getId());
+    	return c.moveToFirst();
+    }
+    public boolean existsInDatabase(Context context) {
+    	SQLiteDatabase db = getDbHelper(context).getReadableDatabase();
+    	return existsInDatabase(db);
+    }
+    
 	public String save(Context context) {
 		SQLiteDatabase db = getDbHelper(context).getWritableDatabase();
-
+		
 		// db.delete(ReceiptEntry.TABLE_NAME, ReceiptEntry.COLUMN_NAME_ID + "=?", new String[] {getId()});
-		db.insert(ReceiptEntry.TABLE_NAME, null, getValues());
+		if(!existsInDatabase(db)) {
+			db.insert(ReceiptEntry.TABLE_NAME, null, getValues());
+		}
+		else {
+			db.update(ReceiptEntry.TABLE_NAME, getValues(), ReceiptEntry.COLUMN_NAME_ID + "=?", new String[] {getId()});
+		}
 		db.close();
 		return getId();
 	}

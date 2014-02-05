@@ -3,8 +3,6 @@ package fi.raka.coffeebuddy.test;
  * Tests single CoffeeReceipt saving and loading
  */
 
-import junit.framework.Test;
-import android.util.Log;
 import fi.raka.coffeebuddy.logic.CoffeeReceipt;
 
 public class SingleReceiptStoreTest extends android.test.AndroidTestCase {
@@ -18,7 +16,7 @@ public class SingleReceiptStoreTest extends android.test.AndroidTestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		cr = new CoffeeReceipt();
+		cr = new fi.raka.coffeebuddy.logic.CoffeeReceipt();
 		cr.setTitle("Paulig");
 		cr.setWaterAmount(1.2);
 		cr.setWaterTemperature(98.3);
@@ -33,9 +31,16 @@ public class SingleReceiptStoreTest extends android.test.AndroidTestCase {
 	}
 	
 	public void testLoad() {
-		Log.d("LOADED_RECEIPT_ID", cr2.getId());
-		Log.d("LOADED_RECEIPT", cr2.toString());
 		assertNotNull(cr2);
+	}
+	
+	public void testExists() {
+		assertEquals( true, cr.existsInDatabase(getContext()) );
+	}
+	
+	public void testNotExists() {
+		CoffeeReceipt newCoffeeReceipt = new CoffeeReceipt();
+		assertEquals( false, newCoffeeReceipt.existsInDatabase(getContext()) );
 	}
 
 	public void testSaveAndLoadTitleRight() {
@@ -55,8 +60,6 @@ public class SingleReceiptStoreTest extends android.test.AndroidTestCase {
 	}
 	
 	public void testSaveAndLoad() {
-		Log.d("CR_TO_STRING", cr.toString());
-		Log.d("CR2_TO_STRING", cr2.toString());
 		assertEquals(cr.toString(), cr2.toString());
 	}
 	

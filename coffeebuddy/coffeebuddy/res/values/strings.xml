@@ -6,5 +6,6 @@
     <string name="water_amount">Vettä</string>
     <string name="water_temperature">Veden lämpötila</string>
     <string name="save">Tallenna</string>
+    <string name="acrid">Kitkerää</string>
 
 </resources>

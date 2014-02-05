@@ -9,7 +9,6 @@ import fi.raka.coffeebuddy.storage.ReceiptDatabaseHelper;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
-import android.util.Log;
 
 public class MultipleReceiptStoreTest extends AndroidTestCase {
 
@@ -47,7 +46,6 @@ public class MultipleReceiptStoreTest extends AndroidTestCase {
 				output += c.getString( c.getColumnIndex(cnames[i]) );
 			}
 		}
-		Log.d("DATABASE_AS_STRING", output);
 		assertEquals(true, output.length() > 0);
 	}
 	
