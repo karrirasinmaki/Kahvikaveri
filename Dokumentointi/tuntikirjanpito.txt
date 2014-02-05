@@ -20,3 +20,9 @@ Maven linkitetty onnistuneesti Android projektiin. Resptien avaus listanäkymäs
 
 28.1.2014 - 3h
 Testiluokat siiretty erilliseen projektiin. Testiprojekti ei käytä Mavenia, Maven ei ollut yhteistyöhaluinen. SQLite databasen kanssa kamppailua (reseptien talletus).
+
+30.1.2014 - 2h
+EMMA koodicoverage tökalun käyttöönottoa onnistumatta.
+
+5.2.2014 - 5h
+Kahvivelhon ensimmäinen versio. EMMA:n käyttöönottoa. Luo jo .em ja .ec tiedostot, enää pitäisi saada html muotoon...

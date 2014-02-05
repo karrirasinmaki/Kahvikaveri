@@ -13,9 +13,7 @@ import android.widget.Button;
 public class CoffeeReceiptActivity extends MyActivity {
 		
 	private CoffeeReceipt coffeeReceipt;
-	
-	private TextView titleView;
-	private EditText coffeeAmountPicker, waterAmountPicker, waterTemperaturePicker;
+	private EditText titleEditText, coffeeAmountPicker, waterAmountPicker, waterTemperaturePicker, descriptionEditText;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +29,11 @@ public class CoffeeReceiptActivity extends MyActivity {
 	}
 	
 	private void initLayout() {
-		titleView = (TextView) findViewById(R.id.title);
+		titleEditText = (EditText) findViewById(R.id.titleEditText);
 		coffeeAmountPicker = (EditText) findViewById(R.id.coffeeAmountPicker);
 		waterAmountPicker = (EditText) findViewById(R.id.waterAmountPicker);
 		waterTemperaturePicker = (EditText) findViewById(R.id.waterTemperaturePicker);
+		descriptionEditText = (EditText) findViewById(R.id.descriptionEditText);
 		
 		// Acrid button
 		((Button) findViewById(R.id.acridButton)).setOnClickListener(new OnClickListener() {
@@ -47,10 +46,11 @@ public class CoffeeReceiptActivity extends MyActivity {
 		// Save button
 		((Button) findViewById(R.id.saveButton)).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				coffeeReceipt.setTitle( titleView.getText().toString() )
-							.setCoffeeAmount( getValue(coffeeAmountPicker) )
-							.setWaterAmount( getValue(waterAmountPicker) )
-							.setWaterTemperature( getValue(waterTemperaturePicker) );
+				coffeeReceipt.setTitle( getValueString(titleEditText) )
+							.setCoffeeAmount( getValueDouble(coffeeAmountPicker) )
+							.setWaterAmount( getValueDouble(waterAmountPicker) )
+							.setWaterTemperature( getValueDouble(waterTemperaturePicker) )
+							.setDescription( descriptionEditText.getText().toString() );
 				coffeeReceipt.save(CoffeeReceiptActivity.this);
 				finish();
 			}
@@ -58,13 +58,17 @@ public class CoffeeReceiptActivity extends MyActivity {
 	}
 	
 	private void fillLayout() {
-		titleView.setText(coffeeReceipt.getTitle() );
-		coffeeAmountPicker.setText(""+coffeeReceipt.getCoffeeAmount() );
-		waterAmountPicker.setText(""+coffeeReceipt.getWaterAmount() );
-		waterTemperaturePicker.setText(""+coffeeReceipt.getWaterTemperature() );
+		titleEditText.setText( coffeeReceipt.getTitle() );
+		coffeeAmountPicker.setText( ""+coffeeReceipt.getCoffeeAmount() );
+		waterAmountPicker.setText( ""+coffeeReceipt.getWaterAmount() );
+		waterTemperaturePicker.setText( ""+coffeeReceipt.getWaterTemperature() );
+		descriptionEditText.setText( coffeeReceipt.getDescription() );
 	}
 	
-	private double getValue(EditText editText) {
+	private String getValueString(EditText editText) {
+		return editText.getText().toString();
+	}
+	private double getValueDouble(EditText editText) {
 		return Double.parseDouble(editText.getText().toString());
 	}
 }

@@ -8,6 +8,6 @@ public interface Saveable {
 	 * @param context
 	 * @return String id
 	 */
-	String save(Context context);
-	void load(Context context);
+	String saveToDB(Context context);
+	void loadFromDB(Context context);
 }

@@ -7,5 +7,7 @@
     <string name="water_temperature">Veden lämpötila</string>
     <string name="save">Tallenna</string>
     <string name="acrid">Kitkerää</string>
+    <string name="description">Kuvaus</string>
+    <string name="tags">Tägit</string>
 
 </resources>

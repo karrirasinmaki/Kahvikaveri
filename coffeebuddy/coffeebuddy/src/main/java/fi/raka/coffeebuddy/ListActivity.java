@@ -1,5 +1,7 @@
 package fi.raka.coffeebuddy;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,14 +10,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-
-import java.util.ArrayList;
-
 import fi.raka.coffeebuddy.logic.CListItem;
 import fi.raka.coffeebuddy.logic.CoffeeReceipt;
 
 public class ListActivity extends Activity {
-		
 	private ArrayList<CListItem> listItems;
 	
     @Override
@@ -29,7 +27,7 @@ public class ListActivity extends Activity {
         Button newReceipt = (Button) findViewById(R.id.newReceipt);
         newReceipt.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				startActivityForResult(new Intent(ListActivity.this, ReceiptWizard.class), 1);
+				startActivityForResult(new Intent(ListActivity.this, CoffeeWizardActivity.class), 1);
 			}
 		});
     }

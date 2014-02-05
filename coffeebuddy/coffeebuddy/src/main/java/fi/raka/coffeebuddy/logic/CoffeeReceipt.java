@@ -21,12 +21,19 @@ public class CoffeeReceipt implements CListItem, Saveable {
     private double waterAmount = 0.0;
     private double waterTemperature = 0.0;
     private double coffeeAmount = 0.0;
+    private String desription;
+    private ArrayList<Tag> tags;
     
+    /**
+     * Create new CoffeeReceipt.
+     */
     public CoffeeReceipt() {
-    	setId("" + new Date().getTime());
+    	init("" + new Date().getTime());
     }
-    public CoffeeReceipt(String id) {
+    
+    private void init(String id) {
     	setId(id);
+    	tags = new ArrayList<Tag>();
     }
     
     /**
@@ -36,9 +43,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
      * @return new CoffeeReceipt with loaded data or just with given id if data not found
      */
     public static CoffeeReceipt load(String id, Context context) {
-    	CoffeeReceipt newCoffeeReceipt =  new CoffeeReceipt(id);
-    	newCoffeeReceipt.load(context);
-    	return newCoffeeReceipt;
+    	return new CoffeeReceipt().setId(id).load(context);
     }
     
     /**
@@ -98,6 +103,10 @@ public class CoffeeReceipt implements CListItem, Saveable {
         this.coffeeAmount = amount;
     	return this;
     }
+    public CoffeeReceipt setDescription(String description) {
+    	this.desription = description;
+    	return this;
+    }
 
     /* Getters */
     public String getId() {
@@ -115,9 +124,57 @@ public class CoffeeReceipt implements CListItem, Saveable {
     public double getCoffeeAmount() {
         return coffeeAmount;
     }
+    public String getDescription() {
+    	return desription;
+    }
+    
+    
+    /* Tag list manipulating */
+    /**
+     * Add tag to tags list.
+     * @param tagName
+     * @return this
+     */
+    public CoffeeReceipt addTag(String tagName) {
+    	tags.add( new Tag(tagName) );
+    	return this;
+    }
+    /**
+     * Removes tag with name tagName
+     * @param tagName
+     * @return
+     */
+    public CoffeeReceipt removeTag(String tagName) {
+    	int index = findTag(tagName);
+    	if(index >= 0) tags.remove( index );
+    	return this;
+    }
+    public ArrayList<Tag> getTags() {
+    	return tags;
+    }
+    /**
+     * Get tag by name.
+     * @param tagName
+     * @return Tag, null if not found
+     */
+    public Tag getTag(String tagName) {
+    	return tags.get( findTag(tagName) );
+    }
+    /**
+     * Find tag position in tags list with given name
+     * @param tagName
+     * @return Index, -1 if not found
+     */
+    public int findTag(String tagName) {
+    	int i = 0;
+    	for(Tag t : tags) {
+    		if( t.getName().equals(tagName) ) return i;
+    		i++;
+    	}
+    	return -1;
+    }
     
     /* Save and load */
-    
     private static ReceiptDatabaseHelper getDbHelper(Context context) {
     	return new ReceiptDatabaseHelper(context);
     }
@@ -195,10 +252,13 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	return existsInDatabase(db);
     }
     
-	public String save(Context context) {
+    /**
+     * Save item to database.
+     * @param context Context
+     */
+	public String saveToDB(Context context) {
 		SQLiteDatabase db = getDbHelper(context).getWritableDatabase();
 		
-		// db.delete(ReceiptEntry.TABLE_NAME, ReceiptEntry.COLUMN_NAME_ID + "=?", new String[] {getId()});
 		if(!existsInDatabase(db)) {
 			db.insert(ReceiptEntry.TABLE_NAME, null, getValues());
 		}
@@ -208,8 +268,19 @@ public class CoffeeReceipt implements CListItem, Saveable {
 		db.close();
 		return getId();
 	}
+    /**
+     * Save item to database.
+     * @param context Context
+     */
+	public String save(Context context) {
+		return saveToDB(context);
+	}
 	
-	public void load(Context context) {
+	/**
+	 * Load item data from database.
+	 * @param context Context
+	 */
+	public void loadFromDB(Context context) {
 		if(getId() == null) throw new IllegalStateException("Entry not found.");
 
     	SQLiteDatabase db = getDbHelper(context).getReadableDatabase();
@@ -217,6 +288,14 @@ public class CoffeeReceipt implements CListItem, Saveable {
 		c.moveToFirst();
 		initWithCursorData(c);
 		db.close();
+	}
+	/**
+	 * Load item data from database.
+	 * @param context Context
+	 */
+	public CoffeeReceipt load(Context context) {
+		loadFromDB(context);
+		return this;
 	}
     
 }

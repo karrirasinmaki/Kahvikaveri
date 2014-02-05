@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class ReceiptWizard extends Activity {
+public class CoffeeWizardActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class ReceiptWizard extends Activity {
 		okButton.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
-				EditText titleEditText = (EditText) findViewById(R.id.title);
+				EditText titleEditText = (EditText) findViewById(R.id.titleEditText);
 				CoffeeReceipt coffeeReceipt = new CoffeeReceipt();
 				coffeeReceipt.setTitle( titleEditText.getText().toString() );
 				coffeeReceipt.save(getApplicationContext() );
