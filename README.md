@@ -13,6 +13,8 @@ Käytössä olevat kirjastot ja pluginit:
   - http://www.eclemma.org/
 - android m2e (Maven integraatio Eclipselle)
   - http://rgladwell.github.io/m2e-android/
+- Spoon (Visualisoi testien suoriutumista eri puhelimilla)
+  - https://github.com/square/spoon
 
 Luokkakaavio:
 http://yuml.me/26ffd73e
