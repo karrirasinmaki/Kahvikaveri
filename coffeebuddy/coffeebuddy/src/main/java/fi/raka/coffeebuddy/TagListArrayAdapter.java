@@ -1,3 +1,7 @@
+/**
+ * Tag list view array adapter. Inflates custom list items.
+ */
+
 package fi.raka.coffeebuddy;
 
 import java.util.ArrayList;

@@ -1,3 +1,7 @@
+/**
+ * Holds info about table and column names used in Receipt storing
+ */
+
 package fi.raka.coffeebuddy.storage;
 
 import android.provider.BaseColumns;

@@ -1,3 +1,7 @@
+/**
+ * Shows single receipt. Allows editing and using CoffeeWizard.
+ */
+
 package fi.raka.coffeebuddy;
 
 import fi.raka.coffeebuddy.logic.CoffeeReceipt;

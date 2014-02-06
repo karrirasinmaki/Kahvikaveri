@@ -1,3 +1,7 @@
+/**
+ * Lists receipts.
+ */
+
 package fi.raka.coffeebuddy;
 
 import java.util.ArrayList;

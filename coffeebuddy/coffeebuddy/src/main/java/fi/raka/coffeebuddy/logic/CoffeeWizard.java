@@ -1,3 +1,7 @@
+/**
+ * Coffee Wizard abstract class. Algorithm for upgrading Coffee receipt.
+ */
+
 package fi.raka.coffeebuddy.logic;
 
 public abstract class CoffeeWizard {

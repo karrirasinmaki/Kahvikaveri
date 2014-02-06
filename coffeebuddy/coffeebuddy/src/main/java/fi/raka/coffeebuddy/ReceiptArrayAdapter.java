@@ -1,3 +1,7 @@
+/**
+ * Receipt list view array adapter. Inflates custom list items.
+ */
+
 package fi.raka.coffeebuddy;
 
 import android.content.Context;

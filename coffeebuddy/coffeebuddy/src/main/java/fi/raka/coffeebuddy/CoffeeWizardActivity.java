@@ -1,3 +1,8 @@
+/**
+ * MIGHT BE REPLACED BY CoffeeReceiptActivity
+ * Step-by-step receipt creating wizard.
+ */
+
 package fi.raka.coffeebuddy;
 
 import fi.raka.coffeebuddy.logic.CoffeeReceipt;

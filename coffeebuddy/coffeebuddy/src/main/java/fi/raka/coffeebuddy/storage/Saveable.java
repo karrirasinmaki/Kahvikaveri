@@ -1,3 +1,7 @@
+/**
+ * Interface for items that can be saved to long term storage.
+ */
+
 package fi.raka.coffeebuddy.storage;
 
 import android.content.Context;

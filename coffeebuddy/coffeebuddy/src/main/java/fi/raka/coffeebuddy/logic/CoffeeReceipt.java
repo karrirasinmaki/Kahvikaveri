@@ -1,5 +1,8 @@
-package fi.raka.coffeebuddy.logic;
+/**
+ * Coffee receipt. Holds info about single receipt.
+ */
 
+package fi.raka.coffeebuddy.logic;
 
 import java.util.ArrayList;
 import java.util.Date;

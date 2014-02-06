@@ -1,3 +1,7 @@
+/**
+ * MAIN Activity
+ */
+
 package fi.raka.coffeebuddy;
 
 import android.app.Activity;

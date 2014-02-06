@@ -1,3 +1,7 @@
+/**
+ * Activity extension. Injects top bar to view.
+ */
+
 package fi.raka.coffeebuddy;
 
 import android.app.Activity;
@@ -8,6 +12,9 @@ import android.widget.ImageButton;
 
 public class MyActivity extends Activity {
 
+	/**
+	 * Init top bar
+	 */
 	public void initTopBar() {
 		ViewStub stub = (ViewStub) findViewById(R.id.topBar);
 		View inflated = stub.inflate();

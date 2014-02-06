@@ -1,3 +1,7 @@
+/**
+ * Database helper. Creates tables and updates database if needed.
+ */
+
 package fi.raka.coffeebuddy.storage;
 
 import fi.raka.coffeebuddy.storage.ReceiptContract.ReceiptEntry;

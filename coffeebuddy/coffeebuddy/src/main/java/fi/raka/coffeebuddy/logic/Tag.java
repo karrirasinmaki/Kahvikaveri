@@ -1,3 +1,7 @@
+/**
+ * Tag.
+ */
+
 package fi.raka.coffeebuddy.logic;
 
 public class Tag {
