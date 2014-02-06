@@ -3,7 +3,7 @@ Kahvikaveri
 
 Ohjelmoinnin harjoitustyö 2014 (aka. Javalabra). Kahvireseptivihko ja työkalu hyvän kahvin valmistukseen.
 
-Ajettava android applikaatio löytyy juuresta "Android.apk".
+Ajettava android applikaatio löytyy juuresta "coffeebuddy.apk".
 
 Maven-eclipse-android konffausohjeet:
 https://code.google.com/p/maven-android-plugin/
