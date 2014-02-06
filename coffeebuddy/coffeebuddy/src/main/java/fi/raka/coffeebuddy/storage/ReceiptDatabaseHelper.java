@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 	
-	public static final int DATABASE_VERSION = 6;
+	public static final int DATABASE_VERSION = 9;
     public static final String DATABASE_NAME = "CoffeeBuddy.db";
     
 	private static final String TYPE_TEXT = " TEXT";
@@ -21,8 +21,15 @@ public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 		    ReceiptEntry.COLUMN_NAME_TITLE + TYPE_TEXT + COMMA_SEP +
 		    ReceiptEntry.COLUMN_NAME_WATER_AMOUNT + TYPE_REAL + COMMA_SEP +
 		    ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE + TYPE_REAL + COMMA_SEP +
-		    ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT + TYPE_REAL +
-	    " )";
+		    ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT + TYPE_REAL + COMMA_SEP +
+		    ReceiptEntry.COLUMN_NAME_DESCRIPTION + TYPE_TEXT +
+	    " );" +
+		// receipt - tag helper table    
+		"CREATE TABLE " + ReceiptEntry.TAGS_TABLE_NAME + " (" +
+		    ReceiptEntry._ID + " INTEGER PRIMARY KEY," +
+		    ReceiptEntry.COLUMN_NAME_ID + TYPE_TEXT + COMMA_SEP +
+		    ReceiptEntry.TAGS_COLUMN_NAME_TAG_NAME + TYPE_TEXT + COMMA_SEP +
+	    " );";
 
 	private static final String SQL_DELETE_ENTRIES =
 	    "DROP TABLE IF EXISTS " + ReceiptEntry.TABLE_NAME;

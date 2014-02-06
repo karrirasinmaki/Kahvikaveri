@@ -12,6 +12,10 @@ public final class ReceiptContract {
 								   COLUMN_NAME_TITLE = "title",
 								   COLUMN_NAME_WATER_AMOUNT = "wateramount",
 								   COLUMN_NAME_WATER_TEMPERATURE = "watertemperature",
-								   COLUMN_NAME_COFFEE_AMOUNT = "coffeeamount";
+								   COLUMN_NAME_COFFEE_AMOUNT = "coffeeamount",
+								   COLUMN_NAME_DESCRIPTION = "description",
+								   
+								   TAGS_TABLE_NAME = "receipts_tags",
+								   TAGS_COLUMN_NAME_TAG_NAME = "tag";
 	}
 }

@@ -13,8 +13,8 @@ import fi.raka.coffeebuddy.logic.CListItem;
 
 public class ReceiptArrayAdapter extends ArrayAdapter<CListItem> {
     
-    private final Context context;
-    private final ArrayList<CListItem> values;
+    private Context context;
+    private ArrayList<CListItem> values;
     private final static int LAYOUT_ID = R.layout.coffee_receipt_list_item;
     
     public ReceiptArrayAdapter(Context context, ArrayList<CListItem> values) {

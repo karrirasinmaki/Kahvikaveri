@@ -2,10 +2,12 @@ package fi.raka.coffeebuddy;
 
 import fi.raka.coffeebuddy.logic.CoffeeReceipt;
 import fi.raka.coffeebuddy.logic.CoffeeWizard;
+import fi.raka.coffeebuddy.logic.Tag;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
@@ -13,7 +15,9 @@ import android.widget.Button;
 public class CoffeeReceiptActivity extends MyActivity {
 		
 	private CoffeeReceipt coffeeReceipt;
-	private EditText titleEditText, coffeeAmountPicker, waterAmountPicker, waterTemperaturePicker, descriptionEditText;
+	private EditText titleEditText, coffeeAmountPicker, waterAmountPicker, waterTemperaturePicker, descriptionEditText, 
+					newTagEditText;
+	private TagListArrayAdapter adapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,8 @@ public class CoffeeReceiptActivity extends MyActivity {
 		waterAmountPicker = (EditText) findViewById(R.id.waterAmountPicker);
 		waterTemperaturePicker = (EditText) findViewById(R.id.waterTemperaturePicker);
 		descriptionEditText = (EditText) findViewById(R.id.descriptionEditText);
+		
+		initTagListView();
 		
 		// Acrid button
 		((Button) findViewById(R.id.acridButton)).setOnClickListener(new OnClickListener() {
@@ -71,4 +77,21 @@ public class CoffeeReceiptActivity extends MyActivity {
 	private double getValueDouble(EditText editText) {
 		return Double.parseDouble(editText.getText().toString());
 	}
+	
+	private void initTagListView() {
+		adapter = new TagListArrayAdapter(this, coffeeReceipt.getTags());
+		adapter.setNotifyOnChange(true);
+		ListView listView = (ListView) findViewById(R.id.tagListView);
+		listView.setAdapter(adapter);
+		
+		newTagEditText = (EditText) findViewById(R.id.newTagEditText);
+		((Button) findViewById(R.id.addNewTagButton)).setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				adapter.add( new Tag( getValueString(newTagEditText) ) );
+				adapter.notifyDataSetChanged();
+				newTagEditText.setText("");
+			}
+		});
+	}
+	
 }

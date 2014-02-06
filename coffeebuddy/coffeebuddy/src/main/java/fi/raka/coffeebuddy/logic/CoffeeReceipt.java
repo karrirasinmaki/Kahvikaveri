@@ -28,11 +28,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
      * Create new CoffeeReceipt.
      */
     public CoffeeReceipt() {
-    	init("" + new Date().getTime());
-    }
-    
-    private void init(String id) {
-    	setId(id);
+    	setId( "" + new Date().getTime() );
     	tags = new ArrayList<Tag>();
     }
     
@@ -43,6 +39,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
      * @return new CoffeeReceipt with loaded data or just with given id if data not found
      */
     public static CoffeeReceipt load(String id, Context context) {
+    	if( id == null || id.length() <= 0 ) return new CoffeeReceipt();
     	return new CoffeeReceipt().setId(id).load(context);
     }
     
@@ -67,6 +64,10 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	return list;
     }
     
+    /**
+     * Init current receipt with Cursor data
+     * @param c Cursor
+     */
     private void initWithCursorData(Cursor c) {
     	_id = getIntColumn(BaseColumns._ID, c);
     	setId( getStringColumn(ReceiptEntry.COLUMN_NAME_ID, c) );
@@ -74,6 +75,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	setWaterAmount( getDoubleColumn(ReceiptEntry.COLUMN_NAME_WATER_AMOUNT, c) );
     	setWaterTemperature( getDoubleColumn(ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE, c) );
     	setCoffeeAmount( getDoubleColumn(ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT, c) );
+    	setDescription( getStringColumn(ReceiptEntry.COLUMN_NAME_DESCRIPTION, c) );
     }
     
     @Override
@@ -183,11 +185,12 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	// Create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
 		// if(_id != null) values.put(ReceiptEntry._ID, _id);
-		values.put(ReceiptEntry.COLUMN_NAME_ID, getId() );
-		values.put(ReceiptEntry.COLUMN_NAME_TITLE, getTitle() );
-		values.put(ReceiptEntry.COLUMN_NAME_WATER_AMOUNT, getWaterAmount() );
-		values.put(ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE, getWaterTemperature() );
-		values.put(ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT, getCoffeeAmount() );
+		values.put( ReceiptEntry.COLUMN_NAME_ID, getId() );
+		values.put( ReceiptEntry.COLUMN_NAME_TITLE, getTitle() );
+		values.put( ReceiptEntry.COLUMN_NAME_WATER_AMOUNT, getWaterAmount() );
+		values.put( ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE, getWaterTemperature() );
+		values.put( ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT, getCoffeeAmount() );
+		values.put( ReceiptEntry.COLUMN_NAME_DESCRIPTION, getDescription() );
 		
 		return values;
     }
@@ -201,7 +204,8 @@ public class CoffeeReceipt implements CListItem, Saveable {
 			ReceiptEntry.COLUMN_NAME_TITLE,
 			ReceiptEntry.COLUMN_NAME_WATER_AMOUNT,
 			ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE,
-			ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT
+			ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT,
+			ReceiptEntry.COLUMN_NAME_DESCRIPTION
 		};
 		
 		// How you want the results sorted in the resulting Cursor

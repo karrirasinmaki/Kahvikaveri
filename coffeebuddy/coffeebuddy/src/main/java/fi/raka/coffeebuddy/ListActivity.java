@@ -14,6 +14,7 @@ import fi.raka.coffeebuddy.logic.CListItem;
 import fi.raka.coffeebuddy.logic.CoffeeReceipt;
 
 public class ListActivity extends Activity {
+	
 	private ArrayList<CListItem> listItems;
 	
     @Override
