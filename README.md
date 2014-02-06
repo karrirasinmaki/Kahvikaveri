@@ -15,6 +15,14 @@ Käytössä olevat kirjastot ja pluginit:
   - http://rgladwell.github.io/m2e-android/
 - Spoon (Visualisoi testien suoriutumista eri puhelimilla)
   - https://github.com/square/spoon
-
-Luokkakaavio:
-http://yuml.me/26ffd73e
+  
+TODO:
+=====
+- EMMA (code coverage) toimimaan
+  - Antaa ulos jo EMMA:n .ec ja .em filut, mutta ei osaa kääntää niistä HTML tiedostoa.
+- Mutaatiotestejä
+  - Ensin EMMA kuntoon
+- Tagit toimimaan resepteissä
+  - Tallennus/lataus
+- Kahvivelho viisaammaksi
+- UI päivityksiä
