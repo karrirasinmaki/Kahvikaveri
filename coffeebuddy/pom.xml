@@ -7,40 +7,35 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>coffeebuddy - Parent</name>
-	
-	<repositories>
-	    <repository>
-	      <id>LocalhostRepo</id>
-	      <url>file://C:/Users/asus/.m2/repository</url>
-	    </repository>
-	  </repositories>
 
 	<modules>
 		<module>coffeebuddy</module>
-		<module>coffeebuddy-it</module>
+		<!-- <module>coffeebuddy-it</module> -->
+		<module>coffeebuddy-robolectric</module>
 	</modules>
-
-	<properties>
-		<platform.version> 4.1.1.4</platform.version>
-		<android.plugin.version>3.6.0</android.plugin.version>
 	
-	    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-	    <sonar.emma.reportPath>/emma/</sonar.emma.reportPath>
-	    <sonar.surefire.reportsPath >/coffeebuddy/target/surefire-reports</sonar.surefire.reportsPath>
-	    <sonar.core.codeCoveragePlugin>emma</sonar.core.codeCoveragePlugin>
+	<properties>
+		<platform.version>4.1.1.4</platform.version>
+		<android.plugin.version>3.6.0</android.plugin.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+		    <dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.8.2</version>
+				<scope>test</scope>
+			</dependency>
 			<dependency>
-				<groupId>com.google.android</groupId>
-				<artifactId>android</artifactId>
-				<version>${platform.version}</version>
-				<scope>provided</scope>
+				<groupId>org.robolectric</groupId>
+				<artifactId>robolectric</artifactId>
+				<version>2.2</version>
+				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>com.google.android</groupId>
-				<artifactId>android-test</artifactId>
+				<artifactId>android</artifactId>
 				<version>${platform.version}</version>
 				<scope>provided</scope>
 			</dependency>
@@ -56,6 +51,7 @@
 					<version>${android.plugin.version}</version>
 					<configuration>
 						<sdk>
+							<!-- platform or api level (api level 4 = platform 1.6) -->
 							<platform>18</platform>
 							<path>C:\Users\asus\dev\tools\adt-bundle-windows-x86_64-20130522\sdk</path>
 						</sdk>
@@ -64,10 +60,26 @@
 					<extensions>true</extensions>
 				</plugin>
 				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.6</version>
+					<configuration>
+						<excludes>
+							<exclude>**/Test*.java</exclude>
+						</excludes>
+						<argLine>-Xmx1024m</argLine>
+					</configuration>
+				</plugin>
+				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.1</version>
+					<version>2.3.2</version>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
+	
 </project>
