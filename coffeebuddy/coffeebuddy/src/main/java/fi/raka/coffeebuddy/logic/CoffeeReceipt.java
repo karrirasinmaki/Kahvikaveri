@@ -12,13 +12,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
+import android.util.Log;
 import fi.raka.coffeebuddy.storage.ReceiptDatabaseHelper;
 import fi.raka.coffeebuddy.storage.Saveable;
 import fi.raka.coffeebuddy.storage.ReceiptContract.ReceiptEntry;
 
 public class CoffeeReceipt implements CListItem, Saveable {
     
-	private String id;
+	private Integer id;
 	private Integer _id = null; // Database id
     private String title;
     private double waterAmount = 0.0;
@@ -31,7 +32,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
      * Create new CoffeeReceipt.
      */
     public CoffeeReceipt() {
-    	setId( "" + new Date().getTime() );
+    	setId( (int) (new Date().getTime() / 1000) );
     	tags = new ArrayList<Tag>();
     }
     
@@ -41,8 +42,8 @@ public class CoffeeReceipt implements CListItem, Saveable {
      * @param context
      * @return new CoffeeReceipt with loaded data or just with given id if data not found
      */
-    public static CoffeeReceipt load(String id, Context context) {
-    	if( id == null || id.length() <= 0 ) return new CoffeeReceipt();
+    public static CoffeeReceipt load(Integer id, Context context) {
+    	if( id == null || id < 0 ) return new CoffeeReceipt();
     	return new CoffeeReceipt().setId(id).load(context);
     }
     
@@ -56,8 +57,8 @@ public class CoffeeReceipt implements CListItem, Saveable {
 
     	SQLiteDatabase db = getDbHelper(context).getReadableDatabase();
 		Cursor c = loadCursorData(db, null);
-		c.moveToFirst();
-		while(c.moveToNext() ) {
+		c.moveToPosition( -1 );
+		while( c.moveToNext() ) {
 			CoffeeReceipt coffeeReceipt = new CoffeeReceipt();
 			coffeeReceipt.initWithCursorData(c);
 			list.add(coffeeReceipt);
@@ -72,8 +73,8 @@ public class CoffeeReceipt implements CListItem, Saveable {
      * @param c Cursor
      */
     private void initWithCursorData(Cursor c) {
-    	_id = getIntColumn(BaseColumns._ID, c);
-    	setId( getStringColumn(ReceiptEntry.COLUMN_NAME_ID, c) );
+    	_id = getIntegerColumn(BaseColumns._ID, c);
+    	setId( getIntegerColumn(ReceiptEntry.COLUMN_NAME_ID, c) );
     	setTitle( getStringColumn(ReceiptEntry.COLUMN_NAME_TITLE, c) );
     	setWaterAmount( getDoubleColumn(ReceiptEntry.COLUMN_NAME_WATER_AMOUNT, c) );
     	setWaterTemperature( getDoubleColumn(ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE, c) );
@@ -88,7 +89,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
     }
     
     /* Setters */
-    public CoffeeReceipt setId(String id) {
+    public CoffeeReceipt setId(Integer id) {
     	this.id = id;
     	return this;
     }
@@ -114,7 +115,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
     }
 
     /* Getters */
-    public String getId() {
+    public Integer getId() {
     	return id;
     }
     public String getTitle() {
@@ -198,7 +199,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
 		return values;
     }
     
-    private static Cursor loadCursorData(SQLiteDatabase db, String id) {		
+    private static Cursor loadCursorData(SQLiteDatabase db, Integer id) {		
 		// Define a projection that specifies which columns from the database
 		// you will actually use after this query.
 		String[] projection = {
@@ -222,7 +223,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
 		}
 		else {
 			selection = ReceiptEntry.COLUMN_NAME_ID + "=?";
-			selectionArgs = new String[]{ id };
+			selectionArgs = new String[]{ ""+id };
 		}
 		
 		Cursor c = db.query(
@@ -246,7 +247,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	return c.getDouble( c.getColumnIndexOrThrow(columnName) );
     }
     
-    private int getIntColumn(String columnName, Cursor c) {
+    private int getIntegerColumn(String columnName, Cursor c) {
     	return c.getInt( c.getColumnIndexOrThrow(columnName) );
     }
     
@@ -263,14 +264,14 @@ public class CoffeeReceipt implements CListItem, Saveable {
      * Save item to database.
      * @param context Context
      */
-	public String saveToDB(Context context) {
+	public Integer saveToDB(Context context) {
 		SQLiteDatabase db = getDbHelper(context).getWritableDatabase();
 		
 		if(!existsInDatabase(db)) {
 			db.insert(ReceiptEntry.TABLE_NAME, null, getValues());
 		}
 		else {
-			db.update(ReceiptEntry.TABLE_NAME, getValues(), ReceiptEntry.COLUMN_NAME_ID + "=?", new String[] {getId()});
+			db.update(ReceiptEntry.TABLE_NAME, getValues(), ReceiptEntry.COLUMN_NAME_ID + "=?", new String[] { ""+getId() });
 		}
 		db.close();
 		return getId();
@@ -279,7 +280,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
      * Save item to database.
      * @param context Context
      */
-	public String save(Context context) {
+	public Integer save(Context context) {
 		return saveToDB(context);
 	}
 	

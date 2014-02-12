@@ -1,4 +1,4 @@
-package fi.raka.coffeebuddy;
+package fi.raka.coffeebuddy.test;
 
 import java.util.ArrayList;
 
@@ -33,7 +33,7 @@ public class MultipleReceiptStoreTest {
 		db = dbHelper.getWritableDatabase();
 		db.delete(ReceiptEntry.TABLE_NAME, null, null);
 		
-		for(int i=10; i>=0; --i) {
+		for(int i=0; i<10; ++i) {
 			CoffeeReceipt c = new CoffeeReceipt();
 			c.setTitle("Title-"+i);
 			c.save(context);
@@ -45,10 +45,11 @@ public class MultipleReceiptStoreTest {
 		db.close();
 	}
 
+	/*
 	@Test
 	public void testDataInDatabase() {
 		String output = "";
-		Cursor c = db.rawQuery("SELECT * FROM "+ReceiptEntry.TABLE_NAME, null);
+		Cursor c = db.qu
 		if( c.moveToFirst() ) {
 			while(c.moveToNext()) {
 				String[] cnames = c.getColumnNames();
@@ -59,6 +60,7 @@ public class MultipleReceiptStoreTest {
 		}
 		same(true, output.length() > 0);
 	}
+	*/
 
 	@Test
 	public void testLoadAll() {

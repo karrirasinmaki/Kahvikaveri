@@ -10,8 +10,8 @@ public interface Saveable {
 	/**
 	 * Saves object to storage
 	 * @param context
-	 * @return String id
+	 * @return Integer id
 	 */
-	String saveToDB(Context context);
+	Integer saveToDB(Context context);
 	void loadFromDB(Context context);
 }

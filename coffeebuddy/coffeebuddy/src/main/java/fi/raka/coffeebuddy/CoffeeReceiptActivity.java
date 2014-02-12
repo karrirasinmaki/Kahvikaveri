@@ -30,7 +30,7 @@ public class CoffeeReceiptActivity extends MyActivity {
 		setContentView(R.layout.coffee_receipt_view);
 		initTopBar();
 		
-		coffeeReceipt = CoffeeReceipt.load(intent.getStringExtra("CoffeeReceiptId"), this);
+		coffeeReceipt = CoffeeReceipt.load(intent.getIntExtra("CoffeeReceiptId", -1), this);
 		initLayout();
 		fillLayout();
 	}

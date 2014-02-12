@@ -1,4 +1,4 @@
-package fi.raka.coffeebuddy;
+package fi.raka.coffeebuddy.test;
 
 import org.junit.Before;
 import org.junit.Test;

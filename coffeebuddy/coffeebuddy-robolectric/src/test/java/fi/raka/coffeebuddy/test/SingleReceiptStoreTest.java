@@ -1,4 +1,4 @@
-package fi.raka.coffeebuddy;
+package fi.raka.coffeebuddy.test;
 /**
  * Tests single CoffeeReceipt saving and loading
  */
@@ -12,13 +12,15 @@ import org.robolectric.RobolectricTestRunner;
 import android.content.Context;
 import static fi.raka.test.utils.Assert.*;
 import fi.raka.coffeebuddy.logic.CoffeeReceipt;
+import fi.raka.coffeebuddy.storage.ReceiptDatabaseHelper;
+import fi.raka.coffeebuddy.storage.ReceiptContract.ReceiptEntry;
 
 @RunWith(RobolectricTestRunner.class)
 public class SingleReceiptStoreTest {
 	
 	private CoffeeReceipt cr;
 	private CoffeeReceipt cr2;
-	private String crId;
+	private Integer crId;
 	
 	private Context context;
 	
@@ -92,7 +94,7 @@ public class SingleReceiptStoreTest {
 	@Test
 	public void testModifyAndLoadReceipt() {
 		cr2.setWaterAmount(1337);
-		String id = cr2.save(context);
+		Integer id = cr2.save(context);
 		CoffeeReceipt newCr = CoffeeReceipt.load(id, context);
 		
 		same(cr2.toString(), newCr.toString());

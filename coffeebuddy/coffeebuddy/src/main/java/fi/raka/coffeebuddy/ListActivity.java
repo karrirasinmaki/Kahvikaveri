@@ -32,7 +32,7 @@ public class ListActivity extends Activity {
         Button newReceipt = (Button) findViewById(R.id.newReceipt);
         newReceipt.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				startActivityForResult(new Intent(ListActivity.this, CoffeeWizardActivity.class), 1);
+				openCoffeeReceiptActivity();
 			}
 		});
     }
@@ -49,8 +49,21 @@ public class ListActivity extends Activity {
     private void createList() {
         ListView listView = (ListView) findViewById(R.id.coffeeReceiptList);
         ReceiptArrayAdapter adapter = new ReceiptArrayAdapter(this, listItems);
+        adapter.setNotifyOnChange(true);
         listView.setAdapter( adapter );
         listView.setOnItemClickListener(listViewItemClickListener);
+    }
+    
+    private void openCoffeeReceiptActivity(Integer id) {
+		Intent intent = new Intent(ListActivity.this, CoffeeReceiptActivity.class);
+		intent.putExtra("CoffeeReceiptId", id);
+		startActivityForResult(intent, 1);
+    }
+    private void openCoffeeReceiptActivity(CoffeeReceipt coffeeReceipt) {
+    	openCoffeeReceiptActivity( coffeeReceipt.getId() );
+    }
+    private void openCoffeeReceiptActivity() {
+    	openCoffeeReceiptActivity( -1 );
     }
     
     @Override
@@ -64,10 +77,7 @@ public class ListActivity extends Activity {
     
     OnItemClickListener listViewItemClickListener = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			CoffeeReceipt coffeeReceipt = (CoffeeReceipt) parent.getItemAtPosition(position);
-			Intent intent = new Intent(ListActivity.this, CoffeeReceiptActivity.class);
-			intent.putExtra("CoffeeReceiptId", coffeeReceipt.getId());
-			startActivity(intent);
+			openCoffeeReceiptActivity( (CoffeeReceipt) parent.getItemAtPosition(position) );
 		}
 	};
 }

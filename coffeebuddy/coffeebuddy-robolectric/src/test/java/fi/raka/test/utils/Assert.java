@@ -9,11 +9,11 @@ import static org.junit.Assert.assertTrue;
 public class Assert {
 	
 	public static void same(Object expected, Object actual) {
-		assertThat(expected, equalTo(actual));
+		assertThat(actual, equalTo(expected));
 	}
 	
 	public static void notsame(Object expected, Object actual) {
-		assertThat(expected, not(equalTo(actual)));
+		assertThat(actual, not(equalTo(expected)));
 	}
 	
 	public static void notnull(Object o) {
