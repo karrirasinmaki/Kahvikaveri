@@ -5,16 +5,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
 import fi.raka.coffeebuddy.R;
 import fi.raka.coffeebuddy.CoffeeReceiptActivity;
 import fi.raka.coffeebuddy.logic.Tag;
+import fi.raka.test.utils.RobolectricMavenTestRunner;
 import static fi.raka.test.utils.Assert.*;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-@RunWith(RobolectricTestRunner.class)
+@RunWith(RobolectricMavenTestRunner.class)
 public class CoffeeReceiptActivityTest {
 	
 	private CoffeeReceiptActivity mActivity;

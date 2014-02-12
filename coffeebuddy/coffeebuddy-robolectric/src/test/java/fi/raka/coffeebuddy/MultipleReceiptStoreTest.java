@@ -47,13 +47,14 @@ public class MultipleReceiptStoreTest {
 
 	@Test
 	public void testDataInDatabase() {
-		Cursor c = db.rawQuery("SELECT * FROM "+ReceiptEntry.TABLE_NAME, null);
-		c.moveToFirst();
 		String output = "";
-		while(c.moveToNext()) {
-			String[] cnames = c.getColumnNames();
-			for(int i=0, l=cnames.length; i<l; ++i) {
-				output += c.getString( c.getColumnIndex(cnames[i]) );
+		Cursor c = db.rawQuery("SELECT * FROM "+ReceiptEntry.TABLE_NAME, null);
+		if( c.moveToFirst() ) {
+			while(c.moveToNext()) {
+				String[] cnames = c.getColumnNames();
+				for(int i=0, l=cnames.length; i<l; ++i) {
+					output += c.getString( c.getColumnIndex(cnames[i]) );
+				}
 			}
 		}
 		same(true, output.length() > 0);
