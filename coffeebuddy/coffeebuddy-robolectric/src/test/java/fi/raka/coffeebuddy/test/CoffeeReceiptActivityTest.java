@@ -34,6 +34,10 @@ public class CoffeeReceiptActivityTest {
 	}
 	
 	@Test
+	public void startActivity() {
+	}
+	
+	@Test
 	public void testAddTag() {
 		newTagEditText.setText("Tag1");
 		addNewTagButton.performClick();

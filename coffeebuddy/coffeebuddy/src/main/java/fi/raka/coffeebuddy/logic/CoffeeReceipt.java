@@ -20,7 +20,6 @@ import fi.raka.coffeebuddy.storage.ReceiptContract.ReceiptEntry;
 public class CoffeeReceipt implements CListItem, Saveable {
     
 	private Integer id;
-	private Integer _id = null; // Database id
     private String title;
     private double waterAmount = 0.0;
     private double waterTemperature = 0.0;
@@ -73,8 +72,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
      * @param c Cursor
      */
     private void initWithCursorData(Cursor c) {
-    	_id = getIntegerColumn(BaseColumns._ID, c);
-    	setId( getIntegerColumn(ReceiptEntry.COLUMN_NAME_ID, c) );
+    	setId( getIntegerColumn(ReceiptEntry._ID, c) );
     	setTitle( getStringColumn(ReceiptEntry.COLUMN_NAME_TITLE, c) );
     	setWaterAmount( getDoubleColumn(ReceiptEntry.COLUMN_NAME_WATER_AMOUNT, c) );
     	setWaterTemperature( getDoubleColumn(ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE, c) );
@@ -142,7 +140,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
      * @return this
      */
     public CoffeeReceipt addTag(String tagName) {
-    	tags.add( new Tag(tagName) );
+    	tags.add( new Tag(tagName, getId()) );
     	return this;
     }
     /**
@@ -188,8 +186,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
     private ContentValues getValues() {
     	// Create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
-		// if(_id != null) values.put(ReceiptEntry._ID, _id);
-		values.put( ReceiptEntry.COLUMN_NAME_ID, getId() );
+		values.put( ReceiptEntry._ID, getId() );
 		values.put( ReceiptEntry.COLUMN_NAME_TITLE, getTitle() );
 		values.put( ReceiptEntry.COLUMN_NAME_WATER_AMOUNT, getWaterAmount() );
 		values.put( ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE, getWaterTemperature() );
@@ -203,8 +200,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
 		// Define a projection that specifies which columns from the database
 		// you will actually use after this query.
 		String[] projection = {
-			BaseColumns._ID,
-			ReceiptEntry.COLUMN_NAME_ID,
+			ReceiptEntry._ID,
 			ReceiptEntry.COLUMN_NAME_TITLE,
 			ReceiptEntry.COLUMN_NAME_WATER_AMOUNT,
 			ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE,
@@ -222,7 +218,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
 			selectionArgs = null;
 		}
 		else {
-			selection = ReceiptEntry.COLUMN_NAME_ID + "=?";
+			selection = ReceiptEntry._ID + "=?";
 			selectionArgs = new String[]{ ""+id };
 		}
 		
@@ -266,15 +262,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
      */
 	public Integer saveToDB(Context context) {
 		SQLiteDatabase db = getDbHelper(context).getWritableDatabase();
-		
-		if(!existsInDatabase(db)) {
-			db.insert(ReceiptEntry.TABLE_NAME, null, getValues());
-		}
-		else {
-			db.update(ReceiptEntry.TABLE_NAME, getValues(), ReceiptEntry.COLUMN_NAME_ID + "=?", new String[] { ""+getId() });
-		}
-		db.close();
-		return getId();
+		return ReceiptDatabaseHelper.Utils.saveToDB(db, ReceiptEntry.TABLE_NAME, getValues(), getId());
 	}
     /**
      * Save item to database.

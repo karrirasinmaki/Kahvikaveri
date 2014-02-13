@@ -19,6 +19,8 @@ public final class ReceiptContract {
 								   COLUMN_NAME_COFFEE_AMOUNT = "coffeeamount",
 								   COLUMN_NAME_DESCRIPTION = "description",
 								   
+								   RECEIPT_COLUMN_NAME_ID = "receiptid",
+								   
 								   TAGS_TABLE_NAME = "receipts_tags",
 								   TAGS_COLUMN_NAME_TAG_NAME = "tag";
 	}

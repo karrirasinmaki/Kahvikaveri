@@ -2,12 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/milk_coffee"
     android:orientation="horizontal" >
 
-    <ImageButton
+    <Button
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_menu_revert" />
+        android:layout_gravity="left"
+        android:background="@null"
+        android:drawableLeft="@drawable/ic_navigation_previous_item"
+        android:text="@string/back"
+        android:textColor="@color/vienna_coffee" />
 
 </LinearLayout>

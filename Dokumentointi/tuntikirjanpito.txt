@@ -29,3 +29,11 @@ Kahvivelhon ensimmäinen versio. EMMA:n käyttöönottoa. Luo jo .em ja .ec tied
 
 5.2.2014 - 6h
 Ulkoasupäivityksiä. Kahvivelho toimii myös resepteissä. Tagien lisäys alkeellisella tasolla. Lisätty kuvaus resepteihin. Edelleenkään EMMA ei toimi. Testejä myös ulkoasuun.
+
+6.2.2014 - 4h
+Ihan hyvää etenemistä. Edelleen kamppailua testien rivikattavuuden kanssa.
+
+12.2.2014 - 4h
+Uusi testityökaly Robolectric ladattu ja konfattu projektiin kiinni. Mahdollistaa testien suorittamisen ilman Android laitetta tai emulaattoria, joten testit valmistuvat nopeasti. Testien rivikattavuuden raportointia en saanut edelleenkään toimimaan.
+
+

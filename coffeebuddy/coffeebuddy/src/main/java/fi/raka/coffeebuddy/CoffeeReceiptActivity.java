@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.EditText;
 import android.widget.Button;
 
@@ -93,7 +92,7 @@ public class CoffeeReceiptActivity extends MyActivity {
 		newTagEditText = (EditText) findViewById(R.id.newTagEditText);
 		((Button) findViewById(R.id.addNewTagButton)).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				adapter.add( new Tag( getValueString(newTagEditText) ) );
+				adapter.add( new Tag( getValueString(newTagEditText), coffeeReceipt.getId() ) );
 				adapter.notifyDataSetChanged();
 				newTagEditText.setText("");
 			}
