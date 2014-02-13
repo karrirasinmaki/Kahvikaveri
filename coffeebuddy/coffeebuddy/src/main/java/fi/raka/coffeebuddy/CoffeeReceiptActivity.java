@@ -7,10 +7,12 @@ package fi.raka.coffeebuddy;
 import fi.raka.coffeebuddy.logic.CoffeeReceipt;
 import fi.raka.coffeebuddy.logic.CoffeeWizard;
 import fi.raka.coffeebuddy.logic.Tag;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.EditText;
 import android.widget.Button;
@@ -61,6 +63,7 @@ public class CoffeeReceiptActivity extends MyActivity {
 							.setWaterTemperature( getValueDouble(waterTemperaturePicker) )
 							.setDescription( descriptionEditText.getText().toString() );
 				coffeeReceipt.save(CoffeeReceiptActivity.this);
+				setResult(Activity.RESULT_OK);
 				finish();
 			}
 		});
@@ -84,8 +87,8 @@ public class CoffeeReceiptActivity extends MyActivity {
 	private void initTagListView() {
 		adapter = new TagListArrayAdapter(this, coffeeReceipt.getTags());
 		adapter.setNotifyOnChange(true);
-		ListView listView = (ListView) findViewById(R.id.tagListView);
-		listView.setAdapter(adapter);
+		LinearLayout listView = (LinearLayout) findViewById(R.id.tagListView);
+		adapter.addParentView( listView );
 		
 		newTagEditText = (EditText) findViewById(R.id.newTagEditText);
 		((Button) findViewById(R.id.addNewTagButton)).setOnClickListener(new OnClickListener() {

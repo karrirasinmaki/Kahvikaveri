@@ -32,7 +32,6 @@
                 android:id="@+id/titleEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:ems="10"
                 android:textSize="32sp" />
 
@@ -162,12 +161,14 @@
                         android:text="@string/add" />
                 </LinearLayout>
 
-                <ListView
+                <LinearLayout
                     android:id="@+id/tagListView"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" >
-                </ListView>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
