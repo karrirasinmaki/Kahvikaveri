@@ -14,16 +14,20 @@ import android.util.Log;
 
 public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 	
-	public static final int DATABASE_VERSION = 4;
+	public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "CoffeeBuddy.db";
     
+    /* Helper strings */
 	private static final String TYPE_TEXT = " TEXT";
 	private static final String TYPE_REAL = " REAL";
 	private static final String TYPE_INTEGER = " INTEGER";
 	private static final String COMMA_SEP = ",";
 	private static final String FOREIGN_KEY = "FOREIGN KEY";
 	private static final String REFERENCES = " REFERENCES ";
-	private static final String SQL_CREATE_ENTRIES =
+	private static final String DROP_TABLE_IF_EXISTS = "DROP TABLE IF EXISTS ";
+	
+	/* Table creation */
+	private static final String CREATE_RECEIPT_TABLE =
 	    "CREATE TABLE " + ReceiptEntry.TABLE_NAME + " (" +
 		    ReceiptEntry._ID + TYPE_INTEGER + " PRIMARY KEY AUTOINCREMENT," +
 		    ReceiptEntry.COLUMN_NAME_TITLE + TYPE_TEXT + COMMA_SEP +
@@ -31,18 +35,21 @@ public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 		    ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE + TYPE_REAL + COMMA_SEP +
 		    ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT + TYPE_REAL + COMMA_SEP +
 		    ReceiptEntry.COLUMN_NAME_DESCRIPTION + TYPE_TEXT +
-	    " );" +
+	    " );";
+	private static final String CREATE_TAGS_TABLE =
 		// receipt - tag helper table    
 		"CREATE TABLE " + ReceiptEntry.TAGS_TABLE_NAME + " (" +
 		    ReceiptEntry._ID + TYPE_INTEGER + " PRIMARY KEY AUTOINCREMENT," +
 		    ReceiptEntry.RECEIPT_COLUMN_NAME_ID + TYPE_INTEGER + COMMA_SEP +
-		    ReceiptEntry.COLUMN_NAME_TITLE + TYPE_TEXT + COMMA_SEP +
+		    ReceiptEntry.COLUMN_NAME_TITLE + TYPE_TEXT +
 		    /* FOREIGN_KEY + "(" + ReceiptEntry.RECEIPT_COLUMN_NAME_ID + ")" + REFERENCES + ReceiptEntry.TABLE_NAME + "(" + ReceiptEntry._ID + ")" + */
 	    " );";
 
-	private static final String SQL_DELETE_ENTRIES =
-	    "DROP TABLE IF EXISTS " + ReceiptEntry.TABLE_NAME + 
-	    "DROP TABLE IF EXISTS " + ReceiptEntry.TAGS_TABLE_NAME;
+	/* Table drop */
+	private static final String DROP_RECEIPT_TABLE =
+		DROP_TABLE_IF_EXISTS + ReceiptEntry.TABLE_NAME;
+	private static final String DROP_TAGS_TABLE =
+		DROP_TABLE_IF_EXISTS + ReceiptEntry.TAGS_TABLE_NAME;
 	
 	public ReceiptDatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -50,14 +57,16 @@ public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 	
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL(SQL_CREATE_ENTRIES);
+		db.execSQL(CREATE_RECEIPT_TABLE);
+		db.execSQL(CREATE_TAGS_TABLE);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
-        db.execSQL(SQL_DELETE_ENTRIES);
+        db.execSQL(DROP_RECEIPT_TABLE);
+        db.execSQL(DROP_TAGS_TABLE);
         onCreate(db);
         Log.d("DATABASE_UPGRADE", "DONE");
 	}
@@ -89,12 +98,8 @@ public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 		public static boolean existsInDatabase(SQLiteDatabase db, String table, Integer id) {
 			if(id == null) return false;
 			
-			try {
-				Cursor c = db.query(table, new String[] {ReceiptEntry._ID}, ReceiptEntry._ID + "=?", new String[] { ""+id }, null, null, null, "1");
-				return c.moveToFirst();
-			} catch(Exception e) {
-				return false;
-			}
+			Cursor c = db.query(table, new String[] {ReceiptEntry._ID}, ReceiptEntry._ID + "=?", new String[] { ""+id }, null, null, null, "1");
+			return c.moveToFirst();
 		}
 		
 		/**
@@ -138,19 +143,15 @@ public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 	     * @return Cursor having data of found rows
 	     */
 	    public static Cursor loadCursorData(SQLiteDatabase db, String tableName, String selection, String[] selectionArgs, String[] projection, String sortOrder) {
-	    	try {
-		    	return db.query(
-		    		tableName,  		              	      // The table to query
-					projection,                               // The columns to return
-					selection,                                // The columns for the WHERE clause
-					selectionArgs,	                          // The values for the WHERE clause
-					null,                                     // don't group the rows
-					null,                                     // don't filter by row groups
-					sortOrder                                 // The sort order
-				);
-	    	} catch(Exception e) {
-	    		return null;
-	    	}
+	    	return db.query(
+	    		tableName,  		              	      // The table to query
+				projection,                               // The columns to return
+				selection,                                // The columns for the WHERE clause
+				selectionArgs,	                          // The values for the WHERE clause
+				null,                                     // don't group the rows
+				null,                                     // don't filter by row groups
+				sortOrder                                 // The sort order
+			);
 	    }
 	    
 		/**

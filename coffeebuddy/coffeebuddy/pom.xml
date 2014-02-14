@@ -21,6 +21,32 @@
 		</dependency>
 	</dependencies>
 	
+	
+	
+		<build>
+	    <plugins>
+	        
+	        <plugin>
+			  <groupId>org.pitest</groupId>
+			  <artifactId>pitest-maven</artifactId>
+			  <version>0.32</version>
+			  <configuration>
+			    <inScopeClasses>
+			      <param>fi.raka.coffeebuddy*</param>
+			    </inScopeClasses>
+			    <targetClasses>
+			      <param>fi.raka.coffeebuddy*</param>
+			    </targetClasses>
+			    <outputFormats>
+			      <outputFormat>XML</outputFormat> 
+			    </outputFormats>
+			  </configuration>
+			</plugin>
+			
+		</plugins>
+	</build>
+	
+	
 	  <profiles>
 	    <profile>
 	      <id>jacoco</id>
