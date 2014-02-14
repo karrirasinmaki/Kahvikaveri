@@ -20,12 +20,14 @@ import fi.raka.coffeebuddy.logic.CoffeeReceipt;
 public class ListActivity extends Activity {
 	
 	private ArrayList<CListItem> listItems;
+	private ListView listView;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+        initList();
         refreshReceiptList();
         
         // New receipt -button
@@ -37,31 +39,53 @@ public class ListActivity extends Activity {
 		});
     }
     
+    /**
+     * Loads all COffeeReceipts and store them to listItems
+     */
     private void loadAllCoffeeReceipts() {
     	listItems = CoffeeReceipt.loadAll(getApplicationContext() );
     }
     
+    /**
+     * Load all CoffeeReceipts and notify adapter about data change to re-draw list
+     */
     private void refreshReceiptList() {
     	loadAllCoffeeReceipts();
-        createList();
+    	((ReceiptArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
     
-    private void createList() {
-        ListView listView = (ListView) findViewById(R.id.coffeeReceiptList);
+    /**
+     * Init listView. Attach adapter to it and set click event listeners
+     */
+    private void initList() {
+        listView = (ListView) findViewById(R.id.coffeeReceiptList);
         ReceiptArrayAdapter adapter = new ReceiptArrayAdapter(this, listItems);
-        adapter.setNotifyOnChange(true);
         listView.setAdapter( adapter );
         listView.setOnItemClickListener(listViewItemClickListener);
     }
     
+    /**
+     * Open CoffeeReceipt in CoffeeReceiptActivity.
+     * Starts activity for result.
+     * @param id of CoffeeReceipt to open
+     */
     private void openCoffeeReceiptActivity(Integer id) {
 		Intent intent = new Intent(ListActivity.this, CoffeeReceiptActivity.class);
 		intent.putExtra("CoffeeReceiptId", id);
 		startActivityForResult(intent, 1);
     }
+    /**
+     * Open CoffeeReceipt in CoffeeReceiptActivity.
+     * Starts activity for result.
+     * @param coffeeReceipt to open
+     */
     private void openCoffeeReceiptActivity(CoffeeReceipt coffeeReceipt) {
     	openCoffeeReceiptActivity( coffeeReceipt.getId() );
     }
+    /**
+     * Open new, empty CoffeeReceipt in CoffeeReceiptActivity.
+     * Starts activity for result.
+     */
     private void openCoffeeReceiptActivity() {
     	openCoffeeReceiptActivity( -1 );
     }
@@ -75,6 +99,10 @@ public class ListActivity extends Activity {
     	}
     }
     
+    /**
+     * List item on click. Opens CoffeeReceipt on click.
+     * Calls openCoffeeReceiptActivity on click.
+     */
     OnItemClickListener listViewItemClickListener = new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			openCoffeeReceiptActivity( (CoffeeReceipt) parent.getItemAtPosition(position) );

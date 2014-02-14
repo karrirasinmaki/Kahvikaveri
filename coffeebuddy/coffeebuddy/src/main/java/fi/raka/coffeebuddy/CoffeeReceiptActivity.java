@@ -36,6 +36,9 @@ public class CoffeeReceiptActivity extends MyActivity {
 		fillLayout();
 	}
 	
+	/**
+	 * Init layout. Set variables, adapters, clickEvents
+	 */
 	private void initLayout() {
 		titleEditText = (EditText) findViewById(R.id.titleEditText);
 		coffeeAmountPicker = (EditText) findViewById(R.id.coffeeAmountPicker);
@@ -68,6 +71,9 @@ public class CoffeeReceiptActivity extends MyActivity {
 		});
 	}
 	
+	/**
+	 * Fills layout with current CoffeeReceipt data.
+	 */
 	private void fillLayout() {
 		titleEditText.setText( coffeeReceipt.getTitle() );
 		coffeeAmountPicker.setText( ""+coffeeReceipt.getCoffeeAmount() );
@@ -76,13 +82,24 @@ public class CoffeeReceiptActivity extends MyActivity {
 		descriptionEditText.setText( coffeeReceipt.getDescription() );
 	}
 	
+	/**
+	 * @param editText
+	 * @return EditText's text value
+	 */
 	private String getValueString(EditText editText) {
 		return editText.getText().toString();
 	}
+	/**
+	 * @param editText
+	 * @return EditText's parsed double value
+	 */
 	private double getValueDouble(EditText editText) {
 		return Double.parseDouble(editText.getText().toString());
 	}
 	
+	/**
+	 * Init tag list view. Set adapter to view and set click event listeners
+	 */
 	private void initTagListView() {
 		adapter = new TagListArrayAdapter(this, coffeeReceipt.getTags());
 		adapter.setNotifyOnChange(true);

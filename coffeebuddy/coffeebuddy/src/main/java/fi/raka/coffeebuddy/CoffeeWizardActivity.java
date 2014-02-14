@@ -1,4 +1,5 @@
 /**
+ * DEPRACED
  * MIGHT BE REPLACED BY CoffeeReceiptActivity
  * Step-by-step receipt creating wizard.
  */
@@ -22,7 +23,6 @@ public class CoffeeWizardActivity extends Activity {
 		
 		Button okButton = (Button) findViewById(R.id.okButton);
 		okButton.setOnClickListener(new View.OnClickListener() {
-			
 			public void onClick(View v) {
 				EditText titleEditText = (EditText) findViewById(R.id.titleEditText);
 				CoffeeReceipt coffeeReceipt = new CoffeeReceipt();
