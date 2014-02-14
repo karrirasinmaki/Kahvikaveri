@@ -9,20 +9,15 @@ Maven-eclipse-android konffausohjeet:
 https://code.google.com/p/maven-android-plugin/
 
 Käytössä olevat kirjastot ja pluginit:
-- EclEmma
-  - http://www.eclemma.org/
+- SonarQube (Koodin analysointi)
+- JaCoCo (Testien rivikattavuus)
 - android m2e (Maven integraatio Eclipselle)
   - http://rgladwell.github.io/m2e-android/
-- Spoon (Visualisoi testien suoriutumista eri puhelimilla)
-  - https://github.com/square/spoon
   
 TODO:
 =====
-- EMMA (code coverage) toimimaan
-  - Antaa ulos jo EMMA:n .ec ja .em filut, mutta ei osaa kääntää niistä HTML tiedostoa.
+- Code coverage toimimaan automaattisemmin
 - Mutaatiotestejä
-  - Ensin EMMA kuntoon
-- Tagit toimimaan resepteissä
-  - Tallennus/lataus
+- Tagien tallennus/lataus
 - Kahvivelho viisaammaksi
 - UI päivityksiä
