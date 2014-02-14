@@ -21,3 +21,5 @@ Käyttäjien toiminnot:
 - Reseptien selaus
 - Uuden reseptin luonti
 - Reseptien muokkaus ja poisto
+  - Tagien lisääminen
+  - Kahvivelhon käyttö
