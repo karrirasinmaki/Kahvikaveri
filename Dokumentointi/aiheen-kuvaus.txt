@@ -1,23 +1,23 @@
-Aihe: Kahvikaveri
-Sovellus, jonka avulla luodaan ja hallinnoidaan kahvireseptej‰. Sovellus 
+ÔªøAihe: Kahvikaveri
+Sovellus, jonka avulla luodaan ja hallinnoidaan kahvireseptej√§. Sovellus 
 helpottaa kahviammattilaisten ja -harrastajien kirjanpitoa hyviksi todetuista 
-kahviresepteist‰.
+kahviresepteist√§.
 
-Sovellus tarjoaa "kahvivelhon", joka kysyy k‰ytt‰j‰lt‰ kaikki kahvin valmistukseen 
-liittyv‰t osa-alueet, kuten nimike, kahvin m‰‰r‰, jauhatus, veden m‰‰r‰ ja l‰mpˆtila 
-sek‰ uuttoaika. Velho kysyy lopuksi k‰ytt‰j‰lt‰, milt‰ kahvi maistui ja osaa ehdottaa 
-parannuksia reseptiin, mik‰li kahvi oli esimerkiksi liian kitker‰‰ tai laihaa. Kun 
-k‰ytt‰j‰ on tyytyv‰inen reseptiin, voi h‰n tallentaa sen reseptivihkoon ja lis‰t‰ 
+Sovellus tarjoaa "kahvivelhon", joka kysyy k√§ytt√§j√§lt√§ kaikki kahvin valmistukseen 
+liittyv√§t osa-alueet, kuten nimike, kahvin m√§√§r√§, jauhatus, veden m√§√§r√§ ja l√§mp√∂tila 
+sek√§ uuttoaika. Velho kysyy lopuksi k√§ytt√§j√§lt√§, milt√§ kahvi maistui ja osaa ehdottaa 
+parannuksia reseptiin, mik√§li kahvi oli esimerkiksi liian kitker√§√§ tai laihaa. Kun 
+k√§ytt√§j√§ on tyytyv√§inen reseptiin, voi h√§n tallentaa sen reseptivihkoon ja lis√§t√§ 
 reseptille kuvaavia tageja, kuten vaalea- tai tummapaahto.
 
-Reseptivihko sis‰lt‰‰ kaikki k‰ytt‰j‰n tallentamat kahvireseptit. Vihkosta voi etsi‰ 
-reseptej‰ muun muassa kahvin nimen, jauhatuksen tai siihen liitettyjen tagien avulla.
+Reseptivihko sis√§lt√§√§ kaikki k√§ytt√§j√§n tallentamat kahvireseptit. Vihkosta voi etsi√§ 
+reseptej√§ muun muassa kahvin nimen, jauhatuksen tai siihen liitettyjen tagien avulla.
 
 
-K‰ytt‰j‰t: Kahviammattilaiset ja -harrastajat
+K√§ytt√§j√§t: Kahviammattilaiset ja -harrastajat
 
 
-K‰ytt‰jien toiminnot:
+K√§ytt√§jien toiminnot:
 - Reseptien selaus
 - Uuden reseptin luonti
 - Reseptien muokkaus ja poisto
