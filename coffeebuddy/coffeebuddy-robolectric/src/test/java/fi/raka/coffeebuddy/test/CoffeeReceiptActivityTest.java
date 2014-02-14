@@ -14,13 +14,14 @@ import fi.raka.test.utils.RobolectricMavenTestRunner;
 import static fi.raka.test.utils.Assert.*;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 @RunWith(RobolectricMavenTestRunner.class)
 public class CoffeeReceiptActivityTest {
 	
 	private CoffeeReceiptActivity mActivity;
-	private ListView tagListView;
+	private fi.raka.coffeebuddy.ListLayout tagListView;
 	private EditText newTagEditText;
 	private Button addNewTagButton;
 	
@@ -28,7 +29,7 @@ public class CoffeeReceiptActivityTest {
 	public void setUp() throws Exception {
 		mActivity = Robolectric.buildActivity(CoffeeReceiptActivity.class).create().visible().get();
 		
-		tagListView = (ListView) mActivity.findViewById(R.id.tagListView);
+		tagListView = (fi.raka.coffeebuddy.ListLayout) mActivity.findViewById(R.id.tagListView);
 		newTagEditText = (EditText) mActivity.findViewById(R.id.newTagEditText);
 		addNewTagButton = (Button) mActivity.findViewById(R.id.addNewTagButton);
 	}

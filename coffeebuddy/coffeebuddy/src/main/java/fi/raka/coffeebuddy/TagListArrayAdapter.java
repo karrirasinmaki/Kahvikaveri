@@ -10,6 +10,7 @@ import fi.raka.coffeebuddy.logic.Tag;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
@@ -19,7 +20,6 @@ public class TagListArrayAdapter extends ArrayAdapter<Tag> {
 	
     private Context context;
     private ArrayList<Tag> values;
-    private ViewGroup parentView;
     private final static int LAYOUT_ID = R.layout.tag_list_item;
     
     public TagListArrayAdapter(Context context, ArrayList<Tag> values) {
@@ -34,7 +34,8 @@ public class TagListArrayAdapter extends ArrayAdapter<Tag> {
      * @param parent Parent ViewGroups
      * @return View row. Returns list item
      */
-    public View getView(int position, ViewGroup parent) {
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) 
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(LAYOUT_ID, parent, false);
@@ -44,39 +45,18 @@ public class TagListArrayAdapter extends ArrayAdapter<Tag> {
         
         ImageButton deleteButton = (ImageButton) rowView.findViewById(R.id.deleteButton);
         deleteButton.setTag( new TagPosition(position) );
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				values.remove( ((TagPosition) v.getTag()).position );
-				notifyDataSetChanged();
-			}
-		});
+        deleteButton.setOnClickListener(deleteButtonOnClickListener);
         
         return rowView;
     }
     
-    /**
-     * Add all childs (every val in values) to parentView
-     */
-    private void drawChilds() {
-		for(int i=0, l=getCount(); i<l; ++i) {
-			parentView.addView(getView(i, parentView), i);
+    private OnClickListener deleteButtonOnClickListener = new View.OnClickListener() {
+		public void onClick(View v) {
+			values.remove( ((TagPosition) v.getTag()).position );
+			notifyDataSetChanged();
 		}
-    }
-    
-    /**
-     * Attach parent ViewGroup to adapter
-     * @param parent ViewGroup to add
-     */
-    public void addParentView(ViewGroup parent) {
-    	parentView = parent;
-    	drawChilds();
-    }
-    
-    @Override
-    public void notifyDataSetChanged() {
-    	parentView.removeAllViews();
-    	drawChilds();
-    };
+	};
+	
     
     /**
      * Holds tag's position info. Tag's position in values 
@@ -85,5 +65,4 @@ public class TagListArrayAdapter extends ArrayAdapter<Tag> {
     	public int position;
     	public TagPosition(int position) { this.position = position; }
     }
-    
 }

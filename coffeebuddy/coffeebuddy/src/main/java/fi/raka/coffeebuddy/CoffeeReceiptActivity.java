@@ -103,8 +103,8 @@ public class CoffeeReceiptActivity extends MyActivity {
 	private void initTagListView() {
 		adapter = new TagListArrayAdapter(this, coffeeReceipt.getTags());
 		adapter.setNotifyOnChange(true);
-		LinearLayout listView = (LinearLayout) findViewById(R.id.tagListView);
-		adapter.addParentView( listView );
+		ListLayout listView = (ListLayout) findViewById(R.id.tagListView);
+		listView.setAdapter(adapter);
 		
 		newTagEditText = (EditText) findViewById(R.id.newTagEditText);
 		((Button) findViewById(R.id.addNewTagButton)).setOnClickListener(new OnClickListener() {

@@ -14,7 +14,7 @@ import android.util.Log;
 
 public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 	
-	public static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "CoffeeBuddy.db";
     
 	private static final String TYPE_TEXT = " TEXT";
@@ -36,12 +36,13 @@ public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 		"CREATE TABLE " + ReceiptEntry.TAGS_TABLE_NAME + " (" +
 		    ReceiptEntry._ID + TYPE_INTEGER + " PRIMARY KEY AUTOINCREMENT," +
 		    ReceiptEntry.RECEIPT_COLUMN_NAME_ID + TYPE_INTEGER + COMMA_SEP +
-		    ReceiptEntry.TAGS_COLUMN_NAME_TAG_NAME + TYPE_TEXT + COMMA_SEP +
-		    FOREIGN_KEY + "(" + ReceiptEntry.RECEIPT_COLUMN_NAME_ID + ")" + REFERENCES + ReceiptEntry.TABLE_NAME + "(" + ReceiptEntry._ID + ")" +
+		    ReceiptEntry.COLUMN_NAME_TITLE + TYPE_TEXT + COMMA_SEP +
+		    /* FOREIGN_KEY + "(" + ReceiptEntry.RECEIPT_COLUMN_NAME_ID + ")" + REFERENCES + ReceiptEntry.TABLE_NAME + "(" + ReceiptEntry._ID + ")" + */
 	    " );";
 
 	private static final String SQL_DELETE_ENTRIES =
-	    "DROP TABLE IF EXISTS " + ReceiptEntry.TABLE_NAME;
+	    "DROP TABLE IF EXISTS " + ReceiptEntry.TABLE_NAME + 
+	    "DROP TABLE IF EXISTS " + ReceiptEntry.TAGS_TABLE_NAME;
 	
 	public ReceiptDatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -65,16 +66,46 @@ public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 	/**
 	 * This class has most common database methods
 	 */
-	public static class Utils {
+	public static class DBUtils {
+		
+		public static String getStringColumn(String columnName, Cursor c) {
+	    	return c.getString( c.getColumnIndexOrThrow(columnName) );
+	    }
+	    
+		public static double getDoubleColumn(String columnName, Cursor c) {
+	    	return c.getDouble( c.getColumnIndexOrThrow(columnName) );
+	    }
+	    
+		public static int getIntegerColumn(String columnName, Cursor c) {
+	    	return c.getInt( c.getColumnIndexOrThrow(columnName) );
+	    }
+	    
 		/**
 		 * @param db where to look from
 		 * @param table name of table
 		 * @param id of entry
 		 * @return true if entry found, false otherwise
 		 */
-		public static boolean existsInDatabase(SQLiteDatabase db, String table, int id) {
-			Cursor c = db.query(table, new String[] {ReceiptEntry._ID}, ReceiptEntry._ID + "=?", new String[] { ""+id }, null, null, null, "1");
-			return c.moveToFirst();
+		public static boolean existsInDatabase(SQLiteDatabase db, String table, Integer id) {
+			if(id == null) return false;
+			
+			try {
+				Cursor c = db.query(table, new String[] {ReceiptEntry._ID}, ReceiptEntry._ID + "=?", new String[] { ""+id }, null, null, null, "1");
+				return c.moveToFirst();
+			} catch(Exception e) {
+				return false;
+			}
+		}
+		
+		/**
+		 * Insert new row to db
+		 * @param db to insert
+		 * @param table name where to insert
+		 * @param values ContentValues to insert
+		 * @return inserted row _ID
+		 */
+		public static Integer insertToDB(SQLiteDatabase db, String table, ContentValues values) {	
+			return (int) db.insert(table, null, values);
 		}
 		/**
 		 * Saves entry to database. Updates row if entry with given id exists. Inserts new row otherwise
@@ -84,10 +115,10 @@ public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 		 * @param id of entry (if exists)
 		 * @return stored entry id
 		 */
-		public static Integer saveToDB(SQLiteDatabase db, String table, ContentValues values, int id) {	
+		public static Integer saveToDB(SQLiteDatabase db, String table, ContentValues values, Integer id) {	
 			Integer out = id;
-			if(!existsInDatabase(db, table, id)) {
-				out = (int) db.insert(table, null, values);
+			if(id == null || !existsInDatabase(db, table, id)) {
+				out = insertToDB(db, table, values);
 			}
 			else {
 				db.update(table, values, ReceiptEntry._ID + "=?", new String[] { ""+id });
@@ -95,6 +126,51 @@ public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 			db.close();
 			return out;
 		}
+		
+		/**
+	     * Loads data from database and returns it as Cursor
+	     * @param db where data is fetched
+	     * @param tableName name of table
+	     * @param selection The columns for the WHERE clause, =? for values
+	     * @param selectionArgs The values for the WHERE clause
+	     * @param projection String array of columns to return
+	     * @param sortOrder SQL style SORT BY clause, without writing SORT BY
+	     * @return Cursor having data of found rows
+	     */
+	    public static Cursor loadCursorData(SQLiteDatabase db, String tableName, String selection, String[] selectionArgs, String[] projection, String sortOrder) {
+	    	try {
+		    	return db.query(
+		    		tableName,  		              	      // The table to query
+					projection,                               // The columns to return
+					selection,                                // The columns for the WHERE clause
+					selectionArgs,	                          // The values for the WHERE clause
+					null,                                     // don't group the rows
+					null,                                     // don't filter by row groups
+					sortOrder                                 // The sort order
+				);
+	    	} catch(Exception e) {
+	    		return null;
+	    	}
+	    }
+	    
+		/**
+	     * Loads data from database and returns it as Cursor
+	     * @param db where data is fetched
+	     * @param tableName name of table
+	     * @param id of CoffeeReceipt to load
+	     * @param projection String array of columns to return
+	     * @return Cursor having data of found rows
+	     */
+	    public static Cursor loadCursorDataById(SQLiteDatabase db, String tableName, Integer id, String[] projection) {
+	    	return loadCursorData(
+	    		db,
+	    		tableName,
+	    		ReceiptEntry._ID + "=?",
+	    		new String[]{ ""+id },
+	    		projection,
+	    		ReceiptEntry.COLUMN_NAME_TITLE + " ASC"
+	    	);
+	    }
 	}
 
 }

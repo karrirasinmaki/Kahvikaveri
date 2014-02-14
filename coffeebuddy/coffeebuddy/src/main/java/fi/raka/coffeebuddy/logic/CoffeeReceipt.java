@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.util.Log;
 import fi.raka.coffeebuddy.storage.ReceiptDatabaseHelper;
+import fi.raka.coffeebuddy.storage.ReceiptDatabaseHelper.DBUtils;
 import fi.raka.coffeebuddy.storage.Saveable;
 import fi.raka.coffeebuddy.storage.ReceiptContract.ReceiptEntry;
 
@@ -31,7 +32,6 @@ public class CoffeeReceipt implements CListItem, Saveable {
      * Create new CoffeeReceipt.
      */
     public CoffeeReceipt() {
-    	setId( (int) (new Date().getTime() / 1000) );
     	tags = new ArrayList<Tag>();
     }
     
@@ -55,7 +55,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	ArrayList<CListItem> list = new ArrayList<CListItem>();
 
     	SQLiteDatabase db = getDbHelper(context).getReadableDatabase();
-		Cursor c = loadCursorData(db, null);
+		Cursor c = DBUtils.loadCursorDataById(db, ReceiptEntry.TABLE_NAME, null, getProjection());
 		c.moveToPosition( -1 );
 		while( c.moveToNext() ) {
 			CoffeeReceipt coffeeReceipt = new CoffeeReceipt();
@@ -72,12 +72,12 @@ public class CoffeeReceipt implements CListItem, Saveable {
      * @param c Cursor
      */
     private void initWithCursorData(Cursor c) {
-    	setId( getIntegerColumn(ReceiptEntry._ID, c) );
-    	setTitle( getStringColumn(ReceiptEntry.COLUMN_NAME_TITLE, c) );
-    	setWaterAmount( getDoubleColumn(ReceiptEntry.COLUMN_NAME_WATER_AMOUNT, c) );
-    	setWaterTemperature( getDoubleColumn(ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE, c) );
-    	setCoffeeAmount( getDoubleColumn(ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT, c) );
-    	setDescription( getStringColumn(ReceiptEntry.COLUMN_NAME_DESCRIPTION, c) );
+    	setId( DBUtils.getIntegerColumn(ReceiptEntry._ID, c) );
+    	setTitle( DBUtils.getStringColumn(ReceiptEntry.COLUMN_NAME_TITLE, c) );
+    	setWaterAmount( DBUtils.getDoubleColumn(ReceiptEntry.COLUMN_NAME_WATER_AMOUNT, c) );
+    	setWaterTemperature( DBUtils.getDoubleColumn(ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE, c) );
+    	setCoffeeAmount( DBUtils.getDoubleColumn(ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT, c) );
+    	setDescription( DBUtils.getStringColumn(ReceiptEntry.COLUMN_NAME_DESCRIPTION, c) );
     }
     
     @Override
@@ -205,15 +205,10 @@ public class CoffeeReceipt implements CListItem, Saveable {
     }
     
     /**
-     * Loads data from database and returns it as Cursor
-     * @param db where data is fetched
-     * @param id of CoffeeReceipt to load
-     * @return Cursor having data of found rows
+     * @return projection String array
      */
-    private static Cursor loadCursorData(SQLiteDatabase db, Integer id) {		
-		// Define a projection that specifies which columns from the database
-		// you will actually use after this query.
-		String[] projection = {
+    private static String[] getProjection() {
+		return new String[] {
 			ReceiptEntry._ID,
 			ReceiptEntry.COLUMN_NAME_TITLE,
 			ReceiptEntry.COLUMN_NAME_WATER_AMOUNT,
@@ -221,44 +216,6 @@ public class CoffeeReceipt implements CListItem, Saveable {
 			ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT,
 			ReceiptEntry.COLUMN_NAME_DESCRIPTION
 		};
-		
-		// How you want the results sorted in the resulting Cursor
-		String sortOrder = ReceiptEntry.COLUMN_NAME_TITLE + " ASC";
-		
-		String selection;
-		String[] selectionArgs;
-		if(id == null) {
-			selection = null;
-			selectionArgs = null;
-		}
-		else {
-			selection = ReceiptEntry._ID + "=?";
-			selectionArgs = new String[]{ ""+id };
-		}
-		
-		Cursor c = db.query(
-			ReceiptEntry.TABLE_NAME,  		          // The table to query
-			projection,                               // The columns to return
-			selection,                                // The columns for the WHERE clause
-			selectionArgs,	                          // The values for the WHERE clause
-			null,                                     // don't group the rows
-			null,                                     // don't filter by row groups
-			sortOrder                                 // The sort order
-		);
-		
-		return c;
-    }
-    
-    private String getStringColumn(String columnName, Cursor c) {
-    	return c.getString( c.getColumnIndexOrThrow(columnName) );
-    }
-    
-    private double getDoubleColumn(String columnName, Cursor c) {
-    	return c.getDouble( c.getColumnIndexOrThrow(columnName) );
-    }
-    
-    private int getIntegerColumn(String columnName, Cursor c) {
-    	return c.getInt( c.getColumnIndexOrThrow(columnName) );
     }
     
     /**
@@ -266,8 +223,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
      * @return true if entry found, false otherwise
      */
     private boolean existsInDatabase(SQLiteDatabase db) {
-    	Cursor c = loadCursorData(db, getId());
-    	return c.moveToFirst();
+    	return  DBUtils.existsInDatabase( db, ReceiptEntry.TABLE_NAME, getId() );
     }
     /**
      * @param context
@@ -284,10 +240,12 @@ public class CoffeeReceipt implements CListItem, Saveable {
      */
 	public Integer saveToDB(Context context) {
 		SQLiteDatabase db = getDbHelper(context).getWritableDatabase();
-		return ReceiptDatabaseHelper.Utils.saveToDB(db, ReceiptEntry.TABLE_NAME, getValues(), getId());
+		setId( DBUtils.saveToDB(db, ReceiptEntry.TABLE_NAME, getValues(), getId()) );
+		return getId();
 	}
     /**
      * Save item to database.
+     * This is shortcut to method saveToDB
      * @param context Context
      */
 	public Integer save(Context context) {
@@ -302,9 +260,10 @@ public class CoffeeReceipt implements CListItem, Saveable {
 		if(getId() == null) throw new IllegalStateException("Entry not found.");
 
     	SQLiteDatabase db = getDbHelper(context).getReadableDatabase();
-		Cursor c = loadCursorData(db, getId());
-		c.moveToFirst();
-		initWithCursorData(c);
+		Cursor c = DBUtils.loadCursorDataById(db, ReceiptEntry.TABLE_NAME, getId(), getProjection());
+		if( c.moveToFirst() ) {
+			initWithCursorData(c);
+		}
 		db.close();
 	}
 	/**
