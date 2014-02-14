@@ -44,22 +44,46 @@
 		</dependency>
 	</dependencies>
 	
-	<build>
-	    <plugins>
-	        <plugin>
-	            <groupId>org.codehaus.mojo</groupId>
-	            <artifactId>cobertura-maven-plugin</artifactId>
-			    <configuration>
-			        <instrumentation>
-			            <includes>
-			                <include>fi.raka.coffeebuddy/*.class</include>
-			                <include>fi.raka.coffeebuddy.logic/*.class</include>
-			                <include>fi.raka.coffeebuddy.storage/*.class</include>
-			            </includes>
-			        </instrumentation>
-			    </configuration>
-	        </plugin>
-	    </plugins>
-	</build>
+	  <profiles>
+	    <profile>
+	      <id>jacoco</id>
+	      <dependencies>
+	        <dependency>
+	          <groupId>org.jacoco</groupId>
+	          <artifactId>org.jacoco.agent</artifactId>
+	          <classifier>runtime</classifier>
+	          <version>${jacoco.version}</version>
+	        </dependency>
+	      </dependencies>
+	      <build>
+	        <plugins>
+	          <plugin>
+	            <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+	            <artifactId>android-maven-plugin</artifactId>
+	            <configuration>
+	              <test>
+	                <coverage>true</coverage>
+	                <createReport>true</createReport>
+	              </test>
+	            </configuration>
+	            <extensions>true</extensions>
+	            <executions>
+	              <execution>
+	                <id>pull-coverage</id>
+	                <phase>post-integration-test</phase>
+	                <goals>
+	                  <goal>pull</goal>
+	                </goals>
+	                <configuration>
+	                  <pullSource>/data/data/org.example/files/coverage.ec</pullSource>
+	                  <pullDestination>${project.basedir}/../app/target/jacoco.exec</pullDestination>
+	                </configuration>
+	              </execution>
+	            </executions>
+	          </plugin>
+	        </plugins>
+	      </build>
+	    </profile>
+	  </profiles>
 	
 </project>

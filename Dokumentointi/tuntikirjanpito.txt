@@ -36,4 +36,5 @@ Ihan hyvää etenemistä. Edelleen kamppailua testien rivikattavuuden kanssa.
 12.2.2014 - 4h
 Uusi testityökaly Robolectric ladattu ja konfattu projektiin kiinni. Mahdollistaa testien suorittamisen ilman Android laitetta tai emulaattoria, joten testit valmistuvat nopeasti. Testien rivikattavuuden raportointia en saanut edelleenkään toimimaan.
 
-
+13.2.2014 - 8h
+Pieniä päivityksiä ulkoasuun ja tietokantaan. Codecoverage vihdoin toimii! Työkaluna SonarQube, joka antaa raportit lokaalille palvelimelle. Yritän selvittää kuinka raportit voisi exportata staattiseksi html filuksi. Ulkoasun päivitys toi mukanaan Eclipseen bugin, jonka johdosta sovellus sekoittaa parin elementin ID:t keskenään tai jotain. Helppo korjata, mutta just nyt ei ennättänyt.
