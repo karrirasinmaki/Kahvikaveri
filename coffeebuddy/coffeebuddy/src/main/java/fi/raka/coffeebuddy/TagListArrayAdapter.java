@@ -1,5 +1,5 @@
 /**
- * Tag list view array adapter. Inflates custom list items.
+ * Tag list array adapter. Inflates custom list items.
  */
 
 package fi.raka.coffeebuddy;
@@ -28,6 +28,12 @@ public class TagListArrayAdapter extends ArrayAdapter<Tag> {
         this.values = values;
     }
 
+    /**
+     * 
+     * @param position values[position] attached to ListItem
+     * @param parent Parent ViewGroups
+     * @return View row. Returns list item
+     */
     public View getView(int position, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) 
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,12 +54,19 @@ public class TagListArrayAdapter extends ArrayAdapter<Tag> {
         return rowView;
     }
     
+    /**
+     * Add all childs (every val in values) to parentView
+     */
     private void drawChilds() {
 		for(int i=0, l=getCount(); i<l; ++i) {
 			parentView.addView(getView(i, parentView), i);
 		}
     }
     
+    /**
+     * Attach parent ViewGroup to adapter
+     * @param parent ViewGroup to add
+     */
     public void addParentView(ViewGroup parent) {
     	parentView = parent;
     	drawChilds();
@@ -65,6 +78,9 @@ public class TagListArrayAdapter extends ArrayAdapter<Tag> {
     	drawChilds();
     };
     
+    /**
+     * Holds tag's position info. Tag's position in values 
+     */
     class TagPosition {
     	public int position;
     	public TagPosition(int position) { this.position = position; }

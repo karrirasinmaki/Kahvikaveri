@@ -62,12 +62,28 @@ public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 	}
 	
 	
-	
+	/**
+	 * This class has most common database methods
+	 */
 	public static class Utils {
+		/**
+		 * @param db where to look from
+		 * @param table name of table
+		 * @param id of entry
+		 * @return true if entry found, false otherwise
+		 */
 		public static boolean existsInDatabase(SQLiteDatabase db, String table, int id) {
 			Cursor c = db.query(table, new String[] {ReceiptEntry._ID}, ReceiptEntry._ID + "=?", new String[] { ""+id }, null, null, null, "1");
 			return c.moveToFirst();
 		}
+		/**
+		 * Saves entry to database. Updates row if entry with given id exists. Inserts new row otherwise
+		 * @param db to store to
+		 * @param table name of table
+		 * @param values to be stored
+		 * @param id of entry (if exists)
+		 * @return stored entry id
+		 */
 		public static Integer saveToDB(SQLiteDatabase db, String table, ContentValues values, int id) {	
 			Integer out = id;
 			if(!existsInDatabase(db, table, id)) {

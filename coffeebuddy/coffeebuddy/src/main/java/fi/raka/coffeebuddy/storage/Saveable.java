@@ -13,5 +13,9 @@ public interface Saveable {
 	 * @return Integer id
 	 */
 	Integer saveToDB(Context context);
+	/**
+	 * Loads object from database
+	 * @param context
+	 */
 	void loadFromDB(Context context);
 }

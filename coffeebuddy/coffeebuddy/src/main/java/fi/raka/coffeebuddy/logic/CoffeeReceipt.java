@@ -179,10 +179,18 @@ public class CoffeeReceipt implements CListItem, Saveable {
     }
     
     /* Save and load */
+    /**
+     * @param context
+     * @return new ReceiptDatabaseHelper
+     */
     private static ReceiptDatabaseHelper getDbHelper(Context context) {
     	return new ReceiptDatabaseHelper(context);
     }
     
+    /**
+     * Get ContentValues, values that will be stored to database
+     * @return ContentValues
+     */
     private ContentValues getValues() {
     	// Create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
@@ -196,6 +204,12 @@ public class CoffeeReceipt implements CListItem, Saveable {
 		return values;
     }
     
+    /**
+     * Loads data from database and returns it as Cursor
+     * @param db where data is fetched
+     * @param id of CoffeeReceipt to load
+     * @return Cursor having data of found rows
+     */
     private static Cursor loadCursorData(SQLiteDatabase db, Integer id) {		
 		// Define a projection that specifies which columns from the database
 		// you will actually use after this query.
@@ -247,10 +261,18 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	return c.getInt( c.getColumnIndexOrThrow(columnName) );
     }
     
+    /**
+     * @param db where we are looking for
+     * @return true if entry found, false otherwise
+     */
     private boolean existsInDatabase(SQLiteDatabase db) {
     	Cursor c = loadCursorData(db, getId());
     	return c.moveToFirst();
     }
+    /**
+     * @param context
+     * @return true if entry found, false otherwise
+     */
     public boolean existsInDatabase(Context context) {
     	SQLiteDatabase db = getDbHelper(context).getReadableDatabase();
     	return existsInDatabase(db);

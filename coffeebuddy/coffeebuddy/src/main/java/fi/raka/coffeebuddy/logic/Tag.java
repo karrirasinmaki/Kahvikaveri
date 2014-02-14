@@ -38,6 +38,10 @@ public class Tag implements Saveable {
 		return this;
 	}
 	
+	/**
+     * Get ContentValues, values that will be stored to database
+     * @return ContentValues
+     */
     private ContentValues getValues() {
     	// Create a new map of values, where column names are the keys
 		ContentValues values = new ContentValues();
