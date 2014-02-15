@@ -9,9 +9,13 @@ import org.robolectric.annotation.Config;
 
 import fi.raka.coffeebuddy.R;
 import fi.raka.coffeebuddy.CoffeeReceiptActivity;
+import fi.raka.coffeebuddy.logic.CoffeeReceipt;
 import fi.raka.coffeebuddy.logic.Tag;
+import fi.raka.coffeebuddy.storage.ReceiptDatabaseHelper;
+import fi.raka.coffeebuddy.storage.ReceiptContract.ReceiptEntry;
 import fi.raka.test.utils.RobolectricMavenTestRunner;
 import static fi.raka.test.utils.Assert.*;
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -24,6 +28,7 @@ public class CoffeeReceiptActivityTest {
 	private fi.raka.coffeebuddy.ListLayout tagListView;
 	private EditText newTagEditText;
 	private Button addNewTagButton;
+	private Button saveReceiptButton;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -32,10 +37,20 @@ public class CoffeeReceiptActivityTest {
 		tagListView = (fi.raka.coffeebuddy.ListLayout) mActivity.findViewById(R.id.tagListView);
 		newTagEditText = (EditText) mActivity.findViewById(R.id.newTagEditText);
 		addNewTagButton = (Button) mActivity.findViewById(R.id.addNewTagButton);
+		saveReceiptButton = (Button) mActivity.findViewById(R.id.saveButton);
+		
+
+		// Clear db
+		ReceiptDatabaseHelper dbHelper = new ReceiptDatabaseHelper(mActivity.getApplicationContext());
+		SQLiteDatabase db = dbHelper.getWritableDatabase();
+		db.delete(ReceiptEntry.TABLE_NAME, null, null);
 	}
 	
 	@Test
-	public void startActivity() {
+	public void testSaveReceipt() {
+		((EditText) mActivity.findViewById(R.id.titleEditText)).setText( "Paulig" );
+		saveReceiptButton.performClick();
+		same( "Paulig", CoffeeReceipt.loadAll(mActivity.getApplicationContext()).get(0).getTitle() );
 	}
 	
 	@Test

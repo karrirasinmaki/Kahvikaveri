@@ -2,9 +2,9 @@
 
     <string name="app_name">Kahvikaveri</string>
     <string name="name">Nimi</string>
-    <string name="coffee_amount">Kahvia</string>
-    <string name="water_amount">Vettä</string>
-    <string name="water_temperature">Veden lämpötila</string>
+    <string name="coffee_amount">Kahvia (g)</string>
+    <string name="water_amount">Vettä (dl)</string>
+    <string name="water_temperature">Vesi (C)</string>
     <string name="save">Tallenna</string>
     <string name="acrid">Kitkerää</string>
     <string name="description">Kuvaus</string>

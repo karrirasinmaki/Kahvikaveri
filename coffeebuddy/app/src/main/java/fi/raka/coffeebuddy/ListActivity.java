@@ -19,15 +19,13 @@ import fi.raka.coffeebuddy.logic.CoffeeReceipt;
 
 public class ListActivity extends Activity {
 	
-	private ArrayList<CListItem> listItems;
 	private ListView listView;
+	private ReceiptArrayAdapter listViewAdapter;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
-        listItems = new ArrayList<CListItem>();
         
         initList();
         refreshReceiptList();
@@ -45,15 +43,16 @@ public class ListActivity extends Activity {
      * Loads all COffeeReceipts and store them to listItems
      */
     private void loadAllCoffeeReceipts() {
-    	listItems = CoffeeReceipt.loadAll(getApplicationContext() );
+    	listViewAdapter.clear();
+    	listViewAdapter.addAll( CoffeeReceipt.loadAll(getApplicationContext()) );
     }
     
     /**
-     * Load all CoffeeReceipts and notify adapter about data change to re-draw list
+     * Load all CoffeeReceipts, update and notify adapter about data change to re-draw list
      */
     private void refreshReceiptList() {
     	loadAllCoffeeReceipts();
-    	((ReceiptArrayAdapter) listView.getAdapter()).notifyDataSetChanged();
+    	listViewAdapter.notifyDataSetChanged();
     }
     
     /**
@@ -61,8 +60,8 @@ public class ListActivity extends Activity {
      */
     private void initList() {
         listView = (ListView) findViewById(R.id.coffeeReceiptList);
-        ReceiptArrayAdapter adapter = new ReceiptArrayAdapter(this, listItems);
-        listView.setAdapter( adapter );
+        listViewAdapter = new ReceiptArrayAdapter(this, new ArrayList<CListItem>());
+        listView.setAdapter( listViewAdapter );
         listView.setOnItemClickListener(listViewItemClickListener);
     }
     

@@ -64,7 +64,7 @@ public class CoffeeReceiptActivity extends MyActivity {
 							.setWaterAmount( getValueDouble(waterAmountPicker) )
 							.setWaterTemperature( getValueDouble(waterTemperaturePicker) )
 							.setDescription( descriptionEditText.getText().toString() );
-				coffeeReceipt.save(CoffeeReceiptActivity.this);
+				coffeeReceipt.save(getApplicationContext());
 				setResult(Activity.RESULT_OK);
 				finish();
 			}
