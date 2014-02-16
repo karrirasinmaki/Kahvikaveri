@@ -52,10 +52,27 @@ public class CoffeeReceipt implements CListItem, Saveable {
      * @return ArrayList<CListItem> filled with CoffeeReceipts
      */
     public static ArrayList<CListItem> loadAll(Context context) {
+    	return loadAll(context, null);
+    }
+    
+    public static ArrayList<CListItem> loadAll(Context context, String filterString) {
     	ArrayList<CListItem> list = new ArrayList<CListItem>();
 
     	SQLiteDatabase db = getDbHelper(context).getReadableDatabase();
-		Cursor c = DBUtils.loadCursorDataById(db, ReceiptEntry.TABLE_NAME, null, getProjection());
+		Cursor c;
+		if(filterString == null) {
+			c = DBUtils.loadCursorDataById(db, ReceiptEntry.TABLE_NAME, null, getProjection());
+		}
+		else {
+			c = DBUtils.loadCursorData(
+				db, 
+				ReceiptEntry.TABLE_NAME, 
+				ReceiptEntry.COLUMN_NAME_TITLE + " LIKE '%"+ filterString.toUpperCase() +"%'", 
+				null, 
+				getProjection(), 
+				ReceiptEntry.COLUMN_NAME_TITLE + " ASC"
+			);
+		}
 		c.moveToPosition( -1 );
 		while( c.moveToNext() ) {
 			CoffeeReceipt coffeeReceipt = new CoffeeReceipt();

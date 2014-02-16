@@ -6,13 +6,11 @@ package fi.raka.coffeebuddy;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import fi.raka.coffeebuddy.logic.CListItem;
@@ -22,6 +20,8 @@ public class ListActivity extends MyActivity {
 	
 	private ListView listView;
 	private ReceiptArrayAdapter listViewAdapter;
+	
+	private SearchBox searchBox;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,14 +37,38 @@ public class ListActivity extends MyActivity {
 				openCoffeeReceiptActivity();
 			}
 		}, ALIGN_RIGHT);
+
+        // New search box
+        searchBox = addSearchView(new SearchBox.OnSearchListener() {
+			public void onEvent(View v, final String value) {
+						refreshReceiptList(value);
+						Log.d("MO", value);
+						searchBox.setVisibility(View.GONE);
+			}
+		}, mainView);
+        searchBox.setVisibility(View.GONE);
+        // Search box toggle visibility button
+        addTopBarButton(0, R.drawable.ic_action_search, 0, new View.OnClickListener() {
+			public void onClick(View v) {
+				if(searchBox.getVisibility() == View.VISIBLE)
+					searchBox.setVisibility(View.GONE);
+				else
+					searchBox.setVisibility(View.VISIBLE);
+			}
+		}, ALIGN_RIGHT);
     }
     
     /**
      * Loads all CoffeeReceipts and store them to listItems
      */
     private void loadAllCoffeeReceipts() {
+    	loadAllCoffeeReceipts(null);
+    }
+    
+    private void loadAllCoffeeReceipts(String filterString) {
+    	ArrayList<CListItem> crArray = CoffeeReceipt.loadAll(getApplicationContext(), filterString);
     	listViewAdapter.clear();
-    	listViewAdapter.addAll( CoffeeReceipt.loadAll(getApplicationContext()) );
+    	listViewAdapter.addAll( crArray );
     }
     
     /**
@@ -52,6 +76,11 @@ public class ListActivity extends MyActivity {
      */
     private void refreshReceiptList() {
     	loadAllCoffeeReceipts();
+    	listViewAdapter.notifyDataSetChanged();
+    }
+    
+    private void refreshReceiptList(String filterString) {
+    	loadAllCoffeeReceipts(filterString);
     	listViewAdapter.notifyDataSetChanged();
     }
     

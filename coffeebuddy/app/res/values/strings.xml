@@ -10,10 +10,12 @@
     <string name="description">Kuvaus</string>
     <string name="tags">Tägit</string>
     <string name="add">Lisää</string>
+    <string name="search_hint">Hae reseptejä...</string>
+    <string name="search">Hae</string>
     <color name="milk_coffee">#E7C7A1</color>
     <color name="coffee">#5A352D</color>
     <color name="vienna_coffee">#D0906D</color>
     <color name="past_time">#885540</color>
-    <string name="back">Back</string>
+    <string name="back">Takaisin</string>
 
 </resources>

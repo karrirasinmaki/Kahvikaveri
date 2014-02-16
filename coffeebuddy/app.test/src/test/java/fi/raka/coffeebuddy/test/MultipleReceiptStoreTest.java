@@ -76,5 +76,28 @@ public class MultipleReceiptStoreTest {
 		same(5, a.size());
 	}
 	
+	@Test
+	public void testFilterSearchFullName() {
+		new CoffeeReceipt().setTitle("aa").save(context);
+		new CoffeeReceipt().setTitle("bee").save(context);
+		new CoffeeReceipt().setTitle("cee").save(context);
+		new CoffeeReceipt().setTitle("baa").save(context);
+		new CoffeeReceipt().setTitle("ttt").save(context);
+
+		same(5, CoffeeReceipt.loadAll(context).size());
+		same(1, CoffeeReceipt.loadAll(context, "ttt").size());
+	}
+	
+	public void testFilterSearchLike() {
+		new CoffeeReceipt().setTitle("aa").save(context);
+		new CoffeeReceipt().setTitle("bee").save(context);
+		new CoffeeReceipt().setTitle("cee").save(context);
+		new CoffeeReceipt().setTitle("baa").save(context);
+		new CoffeeReceipt().setTitle("ttt").save(context);
+
+		same(5, CoffeeReceipt.loadAll(context).size());
+		same(2, CoffeeReceipt.loadAll(context, "aa").size());
+	}
+	
 	
 }

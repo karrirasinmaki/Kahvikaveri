@@ -4,6 +4,7 @@
 
 package fi.raka.coffeebuddy;
 
+import fi.raka.coffeebuddy.SearchBox.OnSearchListener;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 public class MyActivity extends Activity {
 
@@ -22,6 +25,8 @@ public class MyActivity extends Activity {
 	public LinearLayout topBar;
 	public LinearLayout topBarLeft;
 	public LinearLayout topBarRight;
+	
+	public RelativeLayout mainView;
 	
 	public LinearLayout contentView;
 
@@ -71,13 +76,29 @@ public class MyActivity extends Activity {
 		button.setTextColor(getResources().getColor(R.color.vienna_coffee));
 		
 		button.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, 0, rightDrawable, 0);
-		button.setText(text);
+		if(text == 0) button.setText("");
+		else button.setText(text);
 		button.setOnClickListener(onClickListener);
 
 		if(align == ALIGN_LEFT) topBarLeft.addView(button);
 		else if(align == ALIGN_RIGHT) topBarRight.addView(button);
 		
 		return button;
+	}
+	
+	/**
+	 * Add new SearchBox to parent view
+	 * @param onSearchListener fires when search-button is clicked
+	 * @param parent view to add SeachBox
+	 * @return new SearchBox
+	 */
+	public SearchBox addSearchView(OnSearchListener onSearchListener, ViewGroup parent) {
+		SearchBox searchBox = new SearchBox(this);
+		searchBox.setOnSearchListener(onSearchListener);
+		searchBox.setBackgroundColor(getResources().getColor(R.color.past_time));
+		
+		parent.addView(searchBox);
+		return searchBox;
 	}
 	
 	/**
@@ -94,16 +115,14 @@ public class MyActivity extends Activity {
 		initContentView();
 		addTopBarTo(contentView);
 
-		FrameLayout mainView = new FrameLayout(this);
-		FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1);
-		layoutParams.setMargins(0, topBar.getHeight(), 0, 0);
-		mainView.setLayoutParams(layoutParams);
-		
+		mainView = new RelativeLayout(this);
 		View view = getLayoutInflater().inflate(layoutResID, null);
 		view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		mainView.addView(view);
 		
-		contentView.addView(mainView);
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1f);
+		layoutParams.setMargins(0, topBar.getHeight(), 0, 0);
+		contentView.addView(mainView, layoutParams);
 		
 		setContentView(contentView);
 	}
