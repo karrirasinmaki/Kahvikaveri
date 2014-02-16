@@ -29,7 +29,6 @@ public class CoffeeReceiptActivity extends MyActivity {
 		Intent intent = getIntent();
 		
 		setContentView(R.layout.coffee_receipt_view);
-		initTopBar();
 		
 		coffeeReceipt = CoffeeReceipt.load(intent.getIntExtra("CoffeeReceiptId", -1), this);
 		initLayout();

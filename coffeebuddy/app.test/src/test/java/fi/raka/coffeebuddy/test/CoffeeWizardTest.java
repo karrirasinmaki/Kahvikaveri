@@ -48,5 +48,12 @@ public class CoffeeWizardTest {
 		cr = CoffeeWizard.getBetterCoffee(cr, 1.2, 1);
 		same(12.0, cr.getCoffeeAmount());
 	}
+	
+	@Test
+	public void testRightImprovementWhenTooLessCoffee() {
+		cr.setCoffeeAmount(4).setWaterAmount(1).setWaterTemperature(97);
+		cr = CoffeeWizard.getBetterCoffee(cr, 1.2, 1);
+		same( 6.0, cr.getCoffeeAmount() );
+	}
 
 }

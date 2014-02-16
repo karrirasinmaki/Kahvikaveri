@@ -19,7 +19,7 @@ public abstract class CoffeeWizard {
 	 */
 	public static CoffeeReceipt getBetterCoffee(CoffeeReceipt cr, double acrid, double flavour) {
 		// coffee - water ratio | > 1 too much coffee, < 1 too less coffee
-		double coffeeWaterRatio = (cr.getCoffeeAmount() / cr.getWaterAmount()) / cr.getCoffeeAmount();
+		double coffeeWaterRatio = (cr.getCoffeeAmount() / OPTIMAL_COFFEE_AMOUNT_PER_DL) / cr.getWaterAmount();
 		
 		if(acrid > 0) {
 			/*

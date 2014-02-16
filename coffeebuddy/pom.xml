@@ -53,6 +53,13 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	
+	<pluginRepositories>
+    <pluginRepository>
+      <id>org.pitest</id>
+      <url>http://oss.sonatype.org/content/repositories/snapshots/</url>
+    </pluginRepository>
+  </pluginRepositories>
 
 	  <build>
 	    <plugins>
@@ -60,7 +67,7 @@
 	        <plugin>
 			  <groupId>org.pitest</groupId>
 			  <artifactId>pitest-maven</artifactId>
-			  <version>0.32</version>
+			  <version>0.33-SNAPSHOT</version>
 			  <configuration>
 			    <inScopeClasses>
 			      <param>fi.raka.coffeebuddy.*</param>

@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,7 +18,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import fi.raka.coffeebuddy.logic.CListItem;
 import fi.raka.coffeebuddy.logic.CoffeeReceipt;
 
-public class ListActivity extends Activity {
+public class ListActivity extends MyActivity {
 	
 	private ListView listView;
 	private ReceiptArrayAdapter listViewAdapter;
@@ -31,16 +32,15 @@ public class ListActivity extends Activity {
         refreshReceiptList();
         
         // New receipt -button
-        Button newReceipt = (Button) findViewById(R.id.newReceipt);
-        newReceipt.setOnClickListener(new View.OnClickListener() {
+        addTopBarButton(R.string.add, 0, 0, new View.OnClickListener() {
 			public void onClick(View v) {
 				openCoffeeReceiptActivity();
 			}
-		});
+		}, ALIGN_RIGHT);
     }
     
     /**
-     * Loads all COffeeReceipts and store them to listItems
+     * Loads all CoffeeReceipts and store them to listItems
      */
     private void loadAllCoffeeReceipts() {
     	listViewAdapter.clear();
