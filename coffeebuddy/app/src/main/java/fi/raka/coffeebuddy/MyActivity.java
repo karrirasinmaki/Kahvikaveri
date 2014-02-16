@@ -54,6 +54,15 @@ public class MyActivity extends Activity {
 		}
 	};
 	
+	/**
+	 * Adds new button to top bar
+	 * @param text of button
+	 * @param leftDrawable of button
+	 * @param rightDrawable of button
+	 * @param onClickListener of button
+	 * @param align | align left or right. ALIGN_LEFT, ALIGN_RIGHT
+	 * @return just created button
+	 */
 	public Button addTopBarButton(int text, int leftDrawable, int rightDrawable, View.OnClickListener onClickListener, int align) {
 		Button button = new Button(this);
 		button.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
@@ -71,6 +80,9 @@ public class MyActivity extends Activity {
 		return button;
 	}
 	
+	/**
+	 * Inits content view
+	 */
 	private void initContentView() {
 		contentView = new LinearLayout(this);
 		contentView.setOrientation(LinearLayout.VERTICAL);
