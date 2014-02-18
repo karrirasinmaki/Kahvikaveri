@@ -57,6 +57,10 @@ public class TagListArrayAdapter extends ArrayAdapter<Tag> {
 		}
 	};
 	
+	public ArrayList<Tag> getValues() {
+		return values;
+	}
+	
     
     /**
      * Holds tag's position info. Tag's position in values 

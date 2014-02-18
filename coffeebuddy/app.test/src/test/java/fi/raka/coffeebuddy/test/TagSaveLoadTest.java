@@ -59,4 +59,14 @@ public class TagSaveLoadTest {
 		same( tag.getName(), newTag.getName() );
 	}
 	
+	@Test
+	public void testSaveLoadMultipleTags() {
+		new Tag("Tummapaahto1", coffeeReceipt.getId()).saveToDB(context);
+		new Tag("Tummapaahto2", coffeeReceipt.getId()).saveToDB(context);
+		new Tag("Tummapaahto3", coffeeReceipt.getId()).saveToDB(context);
+		new Tag("Tummapaahto4", coffeeReceipt.getId()).saveToDB(context);
+		new Tag("Tummapaahto5", coffeeReceipt.getId()).saveToDB(context);
+		same( 5, Tag.loadAll(context, coffeeReceipt.getId()).size() );
+	}
+	
 }

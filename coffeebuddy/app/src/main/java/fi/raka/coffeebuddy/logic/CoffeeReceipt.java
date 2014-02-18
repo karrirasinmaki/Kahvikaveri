@@ -128,6 +128,10 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	this.desription = description;
     	return this;
     }
+    public CoffeeReceipt setTags(ArrayList<Tag> tags) {
+    	this.tags = tags;
+    	return this;
+    }
 
     /* Getters */
     public Integer getId() {
@@ -147,6 +151,9 @@ public class CoffeeReceipt implements CListItem, Saveable {
     }
     public String getDescription() {
     	return desription;
+    }
+    public ArrayList<Tag> getTags() {
+    	return tags;
     }
     
     
@@ -170,9 +177,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	if(index >= 0) tags.remove( index );
     	return this;
     }
-    public ArrayList<Tag> getTags() {
-    	return tags;
-    }
+    
     /**
      * Get tag by name.
      * @param tagName
@@ -188,7 +193,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
      */
     public int findTag(String tagName) {
     	int i = 0;
-    	for(Tag t : tags) {
+    	for(Tag t : getTags()) {
     		if( t.getName().equals(tagName) ) return i;
     		i++;
     	}
@@ -258,6 +263,11 @@ public class CoffeeReceipt implements CListItem, Saveable {
 	public Integer saveToDB(Context context) {
 		SQLiteDatabase db = getDbHelper(context).getWritableDatabase();
 		setId( DBUtils.saveToDB(db, ReceiptEntry.TABLE_NAME, getValues(), getId()) );
+		
+		for(Tag tag : getTags()) {
+			tag.saveToDB(context);
+		}
+		
 		return getId();
 	}
     /**
@@ -275,6 +285,8 @@ public class CoffeeReceipt implements CListItem, Saveable {
 	 */
 	public void loadFromDB(Context context) {
 		if(getId() == null) throw new IllegalStateException("Entry not found.");
+		
+		setTags( Tag.loadAll(context, getId()) );
 
     	SQLiteDatabase db = getDbHelper(context).getReadableDatabase();
 		Cursor c = DBUtils.loadCursorDataById(db, ReceiptEntry.TABLE_NAME, getId(), getProjection());
