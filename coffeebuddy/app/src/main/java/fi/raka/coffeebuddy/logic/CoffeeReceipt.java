@@ -285,14 +285,15 @@ public class CoffeeReceipt implements CListItem, Saveable {
 	 */
 	public void loadFromDB(Context context) {
 		if(getId() == null) throw new IllegalStateException("Entry not found.");
-		
-		setTags( Tag.loadAll(context, getId()) );
 
     	SQLiteDatabase db = getDbHelper(context).getReadableDatabase();
 		Cursor c = DBUtils.loadCursorDataById(db, ReceiptEntry.TABLE_NAME, getId(), getProjection());
 		if( c.moveToFirst() ) {
 			initWithCursorData(c);
 		}
+		
+		setTags( Tag.loadAll(context, getId()) );
+		
 		db.close();
 	}
 	/**

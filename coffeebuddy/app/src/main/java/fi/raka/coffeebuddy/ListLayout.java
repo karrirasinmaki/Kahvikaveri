@@ -25,11 +25,15 @@ public class ListLayout extends LinearLayout {
 	public void setAdapter(Adapter adapter) {
 		this.adapter = adapter;
 		initAdapter();
+		drawChilds();
 	}
 	public Adapter getAdapter() {
 		return adapter;
 	}
 	
+	/**
+	 * Registers new adapter dataSetObserver
+	 */
 	private void initAdapter() {
 		adapter.registerDataSetObserver(dataSetObserver);
 	}
@@ -43,6 +47,9 @@ public class ListLayout extends LinearLayout {
 		}
     }
     
+    /**
+     * Observers dataset chages in adapter
+     */
     private DataSetObserver dataSetObserver = new DataSetObserver() {
     	@Override
     	public void onChanged() {

@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class CoffeeReceiptActivity extends MyActivity {
 		
@@ -46,6 +47,14 @@ public class CoffeeReceiptActivity extends MyActivity {
 		descriptionEditText = (EditText) findViewById(R.id.descriptionEditText);
 		
 		initTagListView();
+		
+		// Method selection image button
+		((ImageButton) findViewById(R.id.methodImageButton)).setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				CoffeeBrewIconSelectDialog dialog = new CoffeeBrewIconSelectDialog();
+				dialog.show(getFragmentManager(), "Select brew method");
+			}
+		});
 		
 		// Acrid button
 		((Button) findViewById(R.id.acridButton)).setOnClickListener(new OnClickListener() {

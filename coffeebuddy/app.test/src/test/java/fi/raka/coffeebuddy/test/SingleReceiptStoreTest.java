@@ -100,4 +100,15 @@ public class SingleReceiptStoreTest {
 		same(cr2.toString(), newCr.toString());
 	}
 
+	@Test
+	public void testSaveLoadTagsToReceipt() {
+		cr2.addTag("Tag1");
+		cr2.addTag("Tag2");
+		cr2.addTag("Tag3");
+		Integer id = cr2.save(context);
+		
+		CoffeeReceipt newCr = CoffeeReceipt.load( id, context );
+		same( 3, newCr.getTags().size() );
+	}
+	
 }
