@@ -22,28 +22,28 @@ public class CoffeeWizardTest {
 	}
 	
 	@Test
-	public void testAcridTemperatureRemains() throws Exception {
+	public void testAcridTemperatureRemains() {
 		cr.setWaterAmount(2).setCoffeeAmount(10).setWaterTemperature(94);
 		cr = CoffeeWizard.getBetterCoffee(cr, 1.2, 1);
 		same(94.0, cr.getWaterTemperature());
 	}
 
 	@Test
-	public void testAcridWaterAmountRemains() throws Exception {
+	public void testAcridWaterAmountRemains() {
 		cr.setWaterAmount(2).setCoffeeAmount(10).setWaterTemperature(94);
 		cr = CoffeeWizard.getBetterCoffee(cr, 1.2, 1);
 		same(2.0, cr.getWaterAmount());
 	}
 
 	@Test
-	public void testAcridCoffeeAmountChanges() throws Exception {
+	public void testAcridCoffeeAmountChanges() {
 		cr.setWaterAmount(2).setCoffeeAmount(10).setWaterTemperature(94);
 		cr = CoffeeWizard.getBetterCoffee(cr, 1.2, 1);
 		notsame(10.0, cr.getCoffeeAmount());
 	}
 
 	@Test
-	public void testAcridCoffeeAmountOptimal() throws Exception {
+	public void testAcridCoffeeAmountOptimal() {
 		cr.setWaterAmount(2).setCoffeeAmount(10).setWaterTemperature(94);
 		cr = CoffeeWizard.getBetterCoffee(cr, 1.2, 1);
 		same(12.0, cr.getCoffeeAmount());

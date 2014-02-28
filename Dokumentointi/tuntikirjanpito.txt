@@ -38,3 +38,6 @@ Uusi testityökaly Robolectric ladattu ja konfattu projektiin kiinni. Mahdollist
 
 13.2.2014 - 8h
 Pieniä päivityksiä ulkoasuun ja tietokantaan. Codecoverage vihdoin toimii! Työkaluna SonarQube, joka antaa raportit lokaalille palvelimelle. Yritän selvittää kuinka raportit voisi exportata staattiseksi html filuksi. Ulkoasun päivitys toi mukanaan Eclipseen bugin, jonka johdosta sovellus sekoittaa parin elementin ID:t keskenään tai jotain. Helppo korjata, mutta just nyt ei ennättänyt.
+
+28.2.2014 - 5h
+Loppusäätöjä epätoivoisesti deadline mielessä. Viimeisellä viikolla oli tuskaista saada hommaa eteenpäin. Mutta loppuviimeistelyt, pienet UI fixit ja muut teki lopulta ihan OK fiiliksen. Paljon jäi vielä tekemättä ja parannettavaa.
