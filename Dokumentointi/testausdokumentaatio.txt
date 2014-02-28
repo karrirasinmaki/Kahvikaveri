@@ -1,0 +1,35 @@
+Testausdokumentaatio
+====================
+
+Androidille testaus oli aluksi hieman haastavaa. En ollut muutenkaan tehnut Unit testejä aiemmin, joten aika paljon meni aikaa oikeiden välineiden löytämiseen. Läheskään kaikkia Androidin ominaisuuksia ei nimittäin voinut testata aivan normaaleilla Unit testeillä.
+
+Lopulta löysin Robolectric nimisen testauskirjaston, mikä mahdollisti nopeat testien ajot ja ulkoasun helpon testaamisen.
+
+Testejä tehdessä huomasin todella niiden arvon. Etenkin tietueiden tallennuksessa testit helpottivat prosessia huomattavasti.
+
+Muutamissa logiikkaluokissa testit jäivät hieman vähemmälle, sillä testasin päälekkäisiä asioita myös käyttöliittymäluokissa. Myös aikakysymys tuli testeissä vastaan. Aika tahtoi aina hurahtaa ohjelmaa tehtäessä, jolloin testien teko jälkeenpäin ei enää motivoinut.
+
+Testasin ohjelmaa käsin jatkuvasti kehityksen aikana. Kävin ohjelman flowta läpi ja aloin kirjoittaa usein testejä kun joku kaatui odottamattomasti.
+
+Testausohjelma oli hieman ongelmallinen, en vielä lopussakaan saanut testausta toimimaan täysin vaivatta, ja olen hieman epäileväinen testien rivikattavuuden oikeellisuuteen. Esimerkiksi CoffeeWizard luokka näytti 0% kattavuutta, vaikka siihen testejä teinkin.
+
+
+STATS:
+=====
+Käyttöliittymä:
+9 luokkaa
+4 luokkaa testattu
+5 luokkaa testaamatta
+Prosentit: 45%
+
+Logiikka:
+3 luokkaa
+3 luokkaa testattu
+0 luokkaa testaamatta
+Prosentit: 60%
+
+Tallennuskirjastot:
+2 luokkaa
+1 luokkaa testattu
+1 luokkaa testaamatta (Sisältää vain globaalimuuttujia)
+Prosentit: 56%
