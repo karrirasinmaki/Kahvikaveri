@@ -1,4 +1,4 @@
-﻿Aihe: Kahvikaveri
+Aihe: Kahvikaveri
 Sovellus, jonka avulla luodaan ja hallinnoidaan kahvireseptejä. Sovellus 
 helpottaa kahviammattilaisten ja -harrastajien kirjanpitoa hyviksi todetuista 
 kahviresepteistä.
@@ -23,3 +23,16 @@ Käyttäjien toiminnot:
 - Reseptien muokkaus ja poisto
   - Tagien lisääminen
   - Kahvivelhon käyttö
+
+
+Ohjelmarakenteen kuvaus
+=======================
+Ohjelma nivoutuu CoffeeReceipt luokan ympärille. CoffeeReceipt sisältää yhden kahvireseptin tiedot: nimen, kuvauksen, kahvin ja veden määrän, veden lämpötilan sekä reseptiin liitetyt tägit. Jokainen tägi toisaalta on oma luokkansa; Tag.
+
+Sekä luokka CoffeeReceipt ja Tag toteuttavat rajapinnan Saveable. Rajapinta mahdollistaa olioiden tallennuksen, latauksen ja poiston tietokannasta.
+
+Ohjelma käyttää Androidin sisäistä SQLite tietokantaa, johon reseptit tallennetaan. Reseptit tallennetaan kahteen tauluun; toinen resepteille, toinen reseptiin kytketyille tägeille.
+
+CoffeeReceipt toteuttaa myös rajapinnan CListItem, mikä mahdollistaa reseptien listauksen listanäkymään.
+
+CoffeeReceipt luokka käyttää hyväkseen CoffeeWizard abstractia luokkaa. CoffeeWizard käyttää yksinkertaista algoritmiä tekemään kahvireseptistä paremman.
