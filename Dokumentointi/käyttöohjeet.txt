@@ -1,0 +1,15 @@
+Käyttäohjeet - Kahvikaveri
+==========================
+
+Kahvikaverin avulla voit listata suosikkikahvireseptisi kätevästi yhteen paikkaan. Kahvivelho auttaa tekemään kahvistasi paremman makuista, jottei sinun koskaan enää tarvitsisi kärsiä huonosta kahvista.
+
+Aloitusnäkymä
+-------------
+Aloitusnäkymässä on listattu kaikki tallennetut reseptit. Voit hakea reseptejä klikkaamalla suurennuslasia. Haku etsii repestejä, joiden kuvauksesta tai nimestä löytyy haettu hakulauseke. Klikkaamalla listan elementtiä, voit muokata olemassa olevia reseptejä ja klikkaamalla "Lisää" voit luoda uuden repeptin.
+
+Reseptinäkymä
+-------------
+Reseptinäkymässä voit muokata kahvireseptin tietoja. Näkymän alareunassa on kahvilaitetta esittävä symboli. Sitä klikkaamalla voit valita reseptille suotuisan kahvintekolaitteen. Klikkaamalla "Maistele!" Kahvivelho ehdottaa sinulle parannuksia reseptiin. Tägejä voit lisätä kirjoittamalla tägi sille varattuun tekstikenttään ja klikkaamalla "Lisää". Jos haluat poistaa tägin, klikkaa sen vieressä olevaa ruksia.
+
+
+ENJOY!
