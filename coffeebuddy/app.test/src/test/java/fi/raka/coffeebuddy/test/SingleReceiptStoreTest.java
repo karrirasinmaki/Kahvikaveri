@@ -10,10 +10,12 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import static fi.raka.test.utils.Assert.*;
 import fi.raka.coffeebuddy.logic.CoffeeReceipt;
 import fi.raka.coffeebuddy.storage.ReceiptDatabaseHelper;
 import fi.raka.coffeebuddy.storage.ReceiptContract.ReceiptEntry;
+import fi.raka.coffeebuddy.storage.ReceiptDatabaseHelper.DBUtils;
 
 @RunWith(RobolectricTestRunner.class)
 public class SingleReceiptStoreTest {
@@ -42,6 +44,14 @@ public class SingleReceiptStoreTest {
 	@Test
 	public void testSave() {
 		notnull( crId );
+	}
+	
+	@Test
+	public void testDelete() {
+		cr.delete(context);
+
+		SQLiteDatabase db = new ReceiptDatabaseHelper(context).getWritableDatabase();
+		same(false, DBUtils.existsInDatabase(db, ReceiptEntry.TABLE_NAME, cr.getId()));
 	}
 
 	@Test

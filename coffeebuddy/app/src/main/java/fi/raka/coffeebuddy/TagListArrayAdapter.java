@@ -43,7 +43,7 @@ public class TagListArrayAdapter extends ArrayAdapter<Tag> {
         TextView titleView = (TextView) rowView.findViewById( R.id.title );
         titleView.setText( values.get(position).getName() );
         
-        ImageButton deleteButton = (ImageButton) rowView.findViewById(R.id.deleteButton);
+        ImageButton deleteButton = (ImageButton) rowView.findViewById(R.id.deleteImageButton);
         deleteButton.setTag( new TagPosition(position) );
         deleteButton.setOnClickListener(deleteButtonOnClickListener);
         

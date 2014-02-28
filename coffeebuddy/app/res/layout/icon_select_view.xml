@@ -5,62 +5,17 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/firstRow"
+    	android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
-        <ImageButton
-            android:id="@+id/methodImageButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/aeropress" />
-
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/chemex" />
-
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/coffee_maker" />
-
-        <ImageButton
-            android:id="@+id/imageButton7"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/mocca_master" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/secondRow"
+    	android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
-        <ImageButton
-            android:id="@+id/imageButton4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/espresso" />
-
-        <ImageButton
-            android:id="@+id/imageButton5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/french_press" />
-
-        <ImageButton
-            android:id="@+id/imageButton6"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/manual" />
     </LinearLayout>
 
 </LinearLayout>

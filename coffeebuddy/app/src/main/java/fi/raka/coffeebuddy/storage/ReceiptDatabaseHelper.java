@@ -34,6 +34,7 @@ public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 		    ReceiptEntry.COLUMN_NAME_WATER_AMOUNT + TYPE_REAL + COMMA_SEP +
 		    ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE + TYPE_REAL + COMMA_SEP +
 		    ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT + TYPE_REAL + COMMA_SEP +
+		    ReceiptEntry.COLUMN_NAME_METHOD_IMAGE_ID + TYPE_INTEGER + COMMA_SEP +
 		    ReceiptEntry.COLUMN_NAME_DESCRIPTION + TYPE_TEXT +
 	    " );";
 	private static final String CREATE_TAGS_TABLE =
@@ -100,6 +101,16 @@ public class ReceiptDatabaseHelper extends SQLiteOpenHelper {
 			
 			Cursor c = db.query(table, new String[] {ReceiptEntry._ID}, ReceiptEntry._ID + "=?", new String[] { ""+id }, null, null, null, "1");
 			return c.moveToFirst();
+		}
+		
+		/**
+		 * Delete row from database where id is given id
+		 * @param db where to delete
+		 * @param table where to delete
+		 * @param id of row
+		 */
+		public static void deleteFromDBById(SQLiteDatabase db, String table, Integer id) {
+			db.delete(table, ReceiptEntry._ID + "=?", new String[] { ""+id });
 		}
 		
 		/**

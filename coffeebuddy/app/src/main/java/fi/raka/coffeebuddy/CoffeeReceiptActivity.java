@@ -4,11 +4,13 @@
 
 package fi.raka.coffeebuddy;
 
+import fi.raka.coffeebuddy.CoffeeBrewIconSelectDialog.OnReturnDataListener;
 import fi.raka.coffeebuddy.logic.CoffeeReceipt;
 import fi.raka.coffeebuddy.logic.CoffeeWizard;
 import fi.raka.coffeebuddy.logic.Tag;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +24,7 @@ public class CoffeeReceiptActivity extends MyActivity {
 	private CoffeeReceipt coffeeReceipt;
 	private EditText titleEditText, coffeeAmountPicker, waterAmountPicker, waterTemperaturePicker, descriptionEditText, 
 					newTagEditText;
+	private ImageButton methodImageButton;
 	private TagListArrayAdapter adapter;
 	
 	@Override
@@ -36,6 +39,11 @@ public class CoffeeReceiptActivity extends MyActivity {
 		fillLayout();
 	}
 	
+	private void setMethodImageButtonResId(int resId) {
+		methodImageButton.setImageResource(resId);
+		methodImageButton.setTag(resId);
+	}
+	
 	/**
 	 * Init layout. Set variables, adapters, clickEvents
 	 */
@@ -46,19 +54,28 @@ public class CoffeeReceiptActivity extends MyActivity {
 		waterTemperaturePicker = (EditText) findViewById(R.id.waterTemperaturePicker);
 		descriptionEditText = (EditText) findViewById(R.id.descriptionEditText);
 		
+		methodImageButton = (ImageButton) findViewById(R.id.methodImageButton);
+		
 		initTagListView();
 		
 		// Method selection image button
-		((ImageButton) findViewById(R.id.methodImageButton)).setOnClickListener(new OnClickListener() {
+		methodImageButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				CoffeeBrewIconSelectDialog dialog = new CoffeeBrewIconSelectDialog();
-				dialog.show(getFragmentManager(), "Select brew method");
+				final CoffeeBrewIconSelectDialog dialog = new CoffeeBrewIconSelectDialog();
+				dialog.setOnReturnDataListener(new OnReturnDataListener() {
+					public void onEvent(Integer drawableResId) {
+						setMethodImageButtonResId(drawableResId);
+						dialog.dismiss();
+					}
+				});
+				dialog.show(getFragmentManager(), "Select");
 			}
 		});
 		
 		// Acrid button
-		((Button) findViewById(R.id.acridButton)).setOnClickListener(new OnClickListener() {
+		((Button) findViewById(R.id.tasteButton)).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				updateCoffeeReceipt();
 				coffeeReceipt = CoffeeWizard.getBetterCoffee(coffeeReceipt, 1.2, 1.0);
 				fillLayout();
 			}
@@ -67,17 +84,35 @@ public class CoffeeReceiptActivity extends MyActivity {
 		// Save button
 		((Button) findViewById(R.id.saveButton)).setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				coffeeReceipt.setTitle( getValueString(titleEditText) )
-							.setCoffeeAmount( getValueDouble(coffeeAmountPicker) )
-							.setWaterAmount( getValueDouble(waterAmountPicker) )
-							.setWaterTemperature( getValueDouble(waterTemperaturePicker) )
-							.setDescription( descriptionEditText.getText().toString() )
-							.setTags( adapter.getValues() );
+				updateCoffeeReceipt();
 				coffeeReceipt.save(getApplicationContext());
 				setResult(Activity.RESULT_OK);
 				finish();
 			}
 		});
+		
+		// Delete button
+		((Button) findViewById(R.id.delButton)).setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				coffeeReceipt.delete(getApplicationContext());
+				setResult(Activity.RESULT_OK);
+				finish();
+			}
+		});
+		
+	}
+	
+	/**
+	 * Updates coffeeReceipt with form data
+	 */
+	private void updateCoffeeReceipt() {
+		coffeeReceipt.setTitle( getValueString(titleEditText) )
+					.setCoffeeAmount( getValueDouble(coffeeAmountPicker) )
+					.setWaterAmount( getValueDouble(waterAmountPicker) )
+					.setWaterTemperature( getValueDouble(waterTemperaturePicker) )
+					.setDescription( descriptionEditText.getText().toString() )
+					.setTags( adapter.getValues() )
+					.setMethodImageId((Integer) methodImageButton.getTag());
 	}
 	
 	/**
@@ -89,6 +124,8 @@ public class CoffeeReceiptActivity extends MyActivity {
 		waterAmountPicker.setText( ""+coffeeReceipt.getWaterAmount() );
 		waterTemperaturePicker.setText( ""+coffeeReceipt.getWaterTemperature() );
 		descriptionEditText.setText( coffeeReceipt.getDescription() );
+		
+		setMethodImageButtonResId( coffeeReceipt.getMethodImageId() );
 	}
 	
 	/**

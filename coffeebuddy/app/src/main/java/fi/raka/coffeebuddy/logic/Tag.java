@@ -128,4 +128,21 @@ public class Tag implements Saveable {
 		
     	return list;
     }
+	
+	/**
+	 * Delete item data from database.
+	 * @param context Context
+	 */
+	public void deleteFromDB(Context context) {
+		SQLiteDatabase db = new ReceiptDatabaseHelper(context).getWritableDatabase();
+		DBUtils.deleteFromDBById(db, ReceiptEntry.TAGS_TABLE_NAME, getId());
+	}
+	/**
+	 * Delete item data from database.
+	 * @param context Context
+	 */
+	public void delete(Context context) {
+		deleteFromDB(context);
+	}
+	
 }

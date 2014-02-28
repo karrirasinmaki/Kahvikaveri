@@ -5,10 +5,12 @@
 package fi.raka.coffeebuddy;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,6 +37,9 @@ public class ReceiptArrayAdapter extends ArrayAdapter<CListItem> {
         
         TextView titleView = (TextView) rowView.findViewById( R.id.title );
         titleView.setText( values.get(position).getTitle() );
+        
+        TextView descriptionView = (TextView) rowView.findViewById( R.id.description );
+        descriptionView.setText( values.get(position).getDescription() );
         
         return rowView;
     }

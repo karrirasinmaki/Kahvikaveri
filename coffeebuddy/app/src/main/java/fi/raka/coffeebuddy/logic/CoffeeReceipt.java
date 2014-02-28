@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.util.Log;
+import fi.raka.coffeebuddy.R;
 import fi.raka.coffeebuddy.storage.ReceiptDatabaseHelper;
 import fi.raka.coffeebuddy.storage.ReceiptDatabaseHelper.DBUtils;
 import fi.raka.coffeebuddy.storage.Saveable;
@@ -27,6 +28,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
     private double coffeeAmount = 0.0;
     private String desription;
     private ArrayList<Tag> tags;
+    private Integer methodImageId = R.drawable.aeropress;
     
     /**
      * Create new CoffeeReceipt.
@@ -67,7 +69,8 @@ public class CoffeeReceipt implements CListItem, Saveable {
 			c = DBUtils.loadCursorData(
 				db, 
 				ReceiptEntry.TABLE_NAME, 
-				ReceiptEntry.COLUMN_NAME_TITLE + " LIKE '%"+ filterString.toUpperCase() +"%'", 
+				ReceiptEntry.COLUMN_NAME_TITLE + " LIKE '%"+ filterString.toUpperCase() +"%' OR " +
+				ReceiptEntry.COLUMN_NAME_DESCRIPTION + " LIKE '%"+ filterString.toUpperCase() +"%'", 
 				null, 
 				getProjection(), 
 				ReceiptEntry.COLUMN_NAME_TITLE + " ASC"
@@ -95,6 +98,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	setWaterTemperature( DBUtils.getDoubleColumn(ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE, c) );
     	setCoffeeAmount( DBUtils.getDoubleColumn(ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT, c) );
     	setDescription( DBUtils.getStringColumn(ReceiptEntry.COLUMN_NAME_DESCRIPTION, c) );
+    	setMethodImageId( DBUtils.getIntegerColumn(ReceiptEntry.COLUMN_NAME_METHOD_IMAGE_ID, c) );
     }
     
     @Override
@@ -132,6 +136,10 @@ public class CoffeeReceipt implements CListItem, Saveable {
     	this.tags = tags;
     	return this;
     }
+    public CoffeeReceipt setMethodImageId(Integer id) {
+    	methodImageId = id;
+    	return this;
+    }
 
     /* Getters */
     public Integer getId() {
@@ -154,6 +162,9 @@ public class CoffeeReceipt implements CListItem, Saveable {
     }
     public ArrayList<Tag> getTags() {
     	return tags;
+    }
+    public Integer getMethodImageId() {
+    	return methodImageId;
     }
     
     
@@ -222,6 +233,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
 		values.put( ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE, getWaterTemperature() );
 		values.put( ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT, getCoffeeAmount() );
 		values.put( ReceiptEntry.COLUMN_NAME_DESCRIPTION, getDescription() );
+		values.put( ReceiptEntry.COLUMN_NAME_METHOD_IMAGE_ID, getMethodImageId() );
 		
 		return values;
     }
@@ -236,7 +248,8 @@ public class CoffeeReceipt implements CListItem, Saveable {
 			ReceiptEntry.COLUMN_NAME_WATER_AMOUNT,
 			ReceiptEntry.COLUMN_NAME_WATER_TEMPERATURE,
 			ReceiptEntry.COLUMN_NAME_COFFEE_AMOUNT,
-			ReceiptEntry.COLUMN_NAME_DESCRIPTION
+			ReceiptEntry.COLUMN_NAME_DESCRIPTION,
+			ReceiptEntry.COLUMN_NAME_METHOD_IMAGE_ID
 		};
     }
     
@@ -265,6 +278,7 @@ public class CoffeeReceipt implements CListItem, Saveable {
 		setId( DBUtils.saveToDB(db, ReceiptEntry.TABLE_NAME, getValues(), getId()) );
 		
 		for(Tag tag : getTags()) {
+			tag.setReferenceId( getId() );
 			tag.saveToDB(context);
 		}
 		
@@ -303,6 +317,22 @@ public class CoffeeReceipt implements CListItem, Saveable {
 	public CoffeeReceipt load(Context context) {
 		loadFromDB(context);
 		return this;
+	}
+	
+	/**
+	 * Delete item data from database.
+	 * @param context Context
+	 */
+	public void deleteFromDB(Context context) {
+		SQLiteDatabase db = getDbHelper(context).getWritableDatabase();
+		DBUtils.deleteFromDBById(db, ReceiptEntry.TABLE_NAME, getId());
+	}
+	/**
+	 * Delete item data from database.
+	 * @param context Context
+	 */
+	public void delete(Context context) {
+		deleteFromDB(context);
 	}
     
 }

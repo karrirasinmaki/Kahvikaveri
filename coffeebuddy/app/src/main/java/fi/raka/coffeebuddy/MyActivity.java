@@ -53,6 +53,9 @@ public class MyActivity extends Activity {
 		parent.addView(topBar);
 	}
 	
+	/**
+	 * Listens closeButton click activity. Finishes activity on click.
+	 */
 	public View.OnClickListener onCloseButtonClickListener = new View.OnClickListener() {
 		public void onClick(View v) {
 			finish();
@@ -110,6 +113,9 @@ public class MyActivity extends Activity {
 		contentView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 	}
 	
+	/**
+	 * Overrides normal setContentView by adding topbar to layout
+	 */
 	@Override
 	public void setContentView(int layoutResID) {
 		initContentView();
@@ -120,9 +126,11 @@ public class MyActivity extends Activity {
 		view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		mainView.addView(view);
 		
-		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1f);
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		layoutParams.setMargins(0, topBar.getHeight(), 0, 0);
-		contentView.addView(mainView, layoutParams);
+		mainView.setLayoutParams(layoutParams);
+		
+		contentView.addView(mainView);
 		
 		setContentView(contentView);
 	}

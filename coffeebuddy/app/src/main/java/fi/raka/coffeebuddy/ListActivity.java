@@ -65,6 +65,9 @@ public class ListActivity extends MyActivity {
     	loadAllCoffeeReceipts(null);
     }
     
+    /**
+     * Loads all CoffeeReceipts (with String filter) and store them to listItems
+     */
     private void loadAllCoffeeReceipts(String filterString) {
     	ArrayList<CListItem> crArray = CoffeeReceipt.loadAll(getApplicationContext(), filterString);
     	listViewAdapter.clear();
@@ -79,6 +82,9 @@ public class ListActivity extends MyActivity {
     	listViewAdapter.notifyDataSetChanged();
     }
     
+    /**
+     * Load all CoffeeReceipts (with String filter), update and notify adapter about data change to re-draw list
+     */
     private void refreshReceiptList(String filterString) {
     	loadAllCoffeeReceipts(filterString);
     	listViewAdapter.notifyDataSetChanged();

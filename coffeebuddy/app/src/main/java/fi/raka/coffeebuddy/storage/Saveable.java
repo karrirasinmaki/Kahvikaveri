@@ -18,4 +18,10 @@ public interface Saveable {
 	 * @param context
 	 */
 	void loadFromDB(Context context);
+	
+	/**
+	 * Deletes object from database
+	 * @param context
+	 */
+	void deleteFromDB(Context context);
 }

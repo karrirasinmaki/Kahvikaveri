@@ -21,7 +21,6 @@ public class ListLayout extends LinearLayout {
 		super(context, attrs, defStyle);
 	}
 	
-	
 	public void setAdapter(Adapter adapter) {
 		this.adapter = adapter;
 		initAdapter();

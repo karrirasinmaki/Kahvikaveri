@@ -18,6 +18,7 @@ public final class ReceiptContract {
 								   COLUMN_NAME_WATER_TEMPERATURE = "watertemperature",
 								   COLUMN_NAME_COFFEE_AMOUNT = "coffeeamount",
 								   COLUMN_NAME_DESCRIPTION = "description",
+								   COLUMN_NAME_METHOD_IMAGE_ID = "methodimageid",
 								   
 								   RECEIPT_COLUMN_NAME_ID = "receiptid",
 								   
